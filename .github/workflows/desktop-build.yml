@@ -46,25 +46,15 @@ jobs:
         shell: bash
         run: pnpm exec electron-builder --${{ matrix.target }} ${{ matrix.target_args }} --config desktop/electron-builder.yml --publish never
 
-      - name: Smoke test Windows Portable
+      - name: Smoke test Windows installers
         if: matrix.target == 'win'
         shell: pwsh
-        env:
-          PAZ_SMOKE_TEST: "true"
-        run: |
-          $portable = Get-ChildItem -Path release -Filter "*Portable*.exe" | Select-Object -First 1
-          if (-not $portable) { throw "Portable executable not found" }
-          $userData = Join-Path $env:RUNNER_TEMP "paz-smoke-user-data"
-          Remove-Item -Recurse -Force $userData -ErrorAction SilentlyContinue
-          New-Item -ItemType Directory -Force $userData | Out-Null
-          $resultPath = Join-Path $userData "paz-smoke-result.json"
-          $process = Start-Process -FilePath $portable.FullName -ArgumentList @("--user-data-dir=$userData", "--no-sandbox", "--disable-gpu") -PassThru
-          $deadline = (Get-Date).AddSeconds(90)
-          while (-not (Test-Path $resultPath) -and (Get-Date) -lt $deadline) { Start-Sleep -Seconds 2 }
-          if (-not (Test-Path $resultPath)) { throw "Smoke test did not write $resultPath within 90 seconds (process $($process.Id))" }
-          $result = Get-Content $resultPath -Raw | ConvertFrom-Json
-          $result | ConvertTo-Json -Compress
-          if (-not $result.ok) { throw "Portable smoke test failed: $($result.reason)" }
+        run: pwsh -File desktop/smoke-windows.ps1
+
+      - name: Smoke test macOS installers
+        if: matrix.target == 'mac'
+        shell: bash
+        run: bash desktop/smoke-macos.sh release
 
       - name: Upload installers
         uses: actions/upload-artifact@v4
