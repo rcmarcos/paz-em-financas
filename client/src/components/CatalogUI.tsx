@@ -1,7 +1,8 @@
 /* Atlas Editorial: fichas com marcadores terracota, selos de método e leitura comparável. */
+import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ArrowUpRight, Check, CheckCircle2, Clock3, ExternalLink, Gauge, Laptop, Plus, Sparkles, Tag, X } from "lucide-react";
-import type { Entry } from "@/lib/catalog";
+import { entries, recommendEntries, type Entry } from "@/lib/catalog";
 import { kindIcon } from "@/lib/catalog";
 
 export function Metric({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
@@ -16,7 +17,7 @@ export function EntryCard({ entry, selected, onCompare, onOpen }: { entry: Entry
     <div className="entry-heading"><div className="icon-tile"><Icon size={23} strokeWidth={1.7} /></div><div><p className="eyebrow">{entry.eyebrow}</p><h3>{entry.name}</h3></div></div>
     <p className="entry-summary">{entry.summary}</p>
     <div className="tag-row">{entry.tags.map((tag) => <span key={tag} className="tag"><Tag size={11} />{tag}</span>)}</div>
-    <div className="metrics-grid"><Metric icon={Gauge} label="Controle" value={entry.control} /><Metric icon={Clock3} label="Esforço" value={entry.effort} /></div>
+    <div className="metrics-grid"><Metric icon={Gauge} label="Controle" value={entry.control} /><Metric icon={Clock3} label="Esforço" value={entry.effort} /><Metric icon={Sparkles} label="Automação" value={entry.automation} /></div>
     <div className="card-actions"><button type="button" className="text-button" onClick={onOpen}>Ver ficha <ArrowUpRight size={15} /></button><button type="button" className={`compare-button ${selected ? "is-selected" : ""}`} onClick={onCompare} aria-pressed={selected}>{selected ? <Check size={15} /> : <Plus size={15} />}{selected ? "Na comparação" : "Comparar"}</button></div>
   </article>;
 }
@@ -31,6 +32,55 @@ export function DetailDialog({ entry, onClose, selected, onCompare }: { entry: E
     <div className="detail-columns"><div><p className="section-kicker">Para quem faz sentido</p><p className="detail-copy">{entry.bestFor}</p></div><div><p className="section-kicker strength-kicker">Pontos fortes</p><ul className="detail-list">{entry.strengths.map((item) => <li key={item}><CheckCircle2 size={15} />{item}</li>)}</ul></div><div><p className="section-kicker attention-kicker">Pontos de atenção</p><ul className="detail-list">{entry.attention.map((item) => <li key={item}><span className="attention-dot" />{item}</li>)}</ul></div></div>
     <div className="detail-footer"><a className="source-link" href={entry.source.url} target="_blank" rel="noreferrer">Fonte direta: {entry.source.label}<ExternalLink size={14} /></a><button type="button" className={`primary-button ${selected ? "button-selected" : ""}`} onClick={onCompare}>{selected ? <><Check size={16} /> Remover da comparação</> : <><Plus size={16} /> Adicionar à comparação</>}</button></div>
   </div></div>;
+}
+
+export function AssistantPanel({ onClose, onSelect }: { onClose: () => void; onSelect: (id: string) => void }) {
+  const [step, setStep] = useState(1);
+  const [profile, setProfile] = useState("");
+  const [goal, setGoal] = useState("");
+  const [effort, setEffort] = useState("");
+  const [automation, setAutomation] = useState("");
+
+  const recommendations = recommendEntries({ profile, goal, effort, automation });
+
+  return <div className="comparison-backdrop" role="presentation" onMouseDown={onClose}><aside className="comparison-panel" role="dialog" aria-modal="true" aria-labelledby="assistant-title" onMouseDown={(event) => event.stopPropagation()}>
+    <div className="comparison-panel-header"><div><p className="eyebrow">Assistente de escolha</p><h2 id="assistant-title">Encontre seu método</h2></div><button type="button" className="icon-button" onClick={onClose} aria-label="Fechar assistente"><X size={18} /></button></div>
+    
+    {step === 1 && <div className="assistant-step">
+      <h3>Qual é o seu perfil atual?</h3>
+      <div className="assistant-options">
+        <button type="button" className={`assistant-option ${profile === "iniciantes" ? "selected" : ""}`} onClick={() => { setProfile("iniciantes"); setStep(2); }}>Iniciante (nunca controlei)</button>
+        <button type="button" className={`assistant-option ${profile === "detalhista" ? "selected" : ""}`} onClick={() => { setProfile("detalhista"); setStep(2); }}>Detalhista (gosto de planilhas)</button>
+        <button type="button" className={`assistant-option ${profile === "renda-variavel" ? "selected" : ""}`} onClick={() => { setProfile("renda-variavel"); setStep(2); }}>Renda variável (freelancer)</button>
+      </div>
+    </div>}
+
+    {step === 2 && <div className="assistant-step">
+      <h3>Qual é o seu objetivo principal?</h3>
+      <div className="assistant-options">
+        <button type="button" className={`assistant-option ${goal === "quitar-dividas" ? "selected" : ""}`} onClick={() => { setGoal("quitar-dividas"); setStep(3); }}>Quitar dívidas</button>
+        <button type="button" className={`assistant-option ${goal === "poupar" ? "selected" : ""}`} onClick={() => { setGoal("poupar"); setStep(3); }}>Poupar e investir</button>
+        <button type="button" className={`assistant-option ${goal === "patrimonio" ? "selected" : ""}`} onClick={() => { setGoal("patrimonio"); setStep(3); }}>Acompanhar patrimônio</button>
+      </div>
+    </div>}
+
+    {step === 3 && <div className="assistant-step">
+      <h3>Como você prefere a manutenção?</h3>
+      <div className="assistant-options">
+        <button type="button" className={`assistant-option ${effort === "baixa-manutenção" ? "selected" : ""}`} onClick={() => { setEffort("baixa-manutenção"); setAutomation("alta-automacao"); setStep(4); }}>Pouco esforço (alta automação)</button>
+        <button type="button" className={`assistant-option ${effort === "media-manutencao" ? "selected" : ""}`} onClick={() => { setEffort("media-manutencao"); setAutomation("assistida"); setStep(4); }}>Esforço médio (revisão semanal)</button>
+        <button type="button" className={`assistant-option ${effort === "alta-manutencao" ? "selected" : ""}`} onClick={() => { setEffort("alta-manutencao"); setAutomation("baixa-automacao"); setStep(4); }}>Controle total (lançamento manual)</button>
+      </div>
+    </div>}
+
+    {step === 4 && <div className="assistant-results">
+      <h3>Nossas recomendações para você:</h3>
+      {recommendations.length > 0 ? <div className="entry-grid">
+        {recommendations.map(entry => <EntryCard key={entry.id} entry={entry} selected={false} onCompare={() => onSelect(entry.id)} onOpen={() => onSelect(entry.id)} />)}
+      </div> : <p>Não encontramos uma combinação exata, tente ajustar os filtros no acervo.</p>}
+      <button type="button" className="outline-button mt-6" onClick={() => setStep(1)}>Refazer escolhas</button>
+    </div>}
+  </aside></div>;
 }
 
 export function ComparisonPanel({ selected, onClose, onRemove }: { selected: Entry[]; onClose: () => void; onRemove: (id: string) => void }) {

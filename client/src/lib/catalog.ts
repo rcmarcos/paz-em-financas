@@ -21,6 +21,7 @@ export type Entry = {
   strengths: string[];
   attention: string[];
   source: { label: string; url: string };
+  recommendationTags?: string[];
 };
 
 export const entries: Entry[] = [
@@ -141,8 +142,124 @@ export const entries: Entry[] = [
     attention: ["Pode não atender bancos brasileiros", "Idioma e preço são fatores de decisão", "Agregação depende de conexões externas"],
     source: { label: "Site oficial da Monarch", url: "https://www.monarch.com/" },
   },
+  {
+    id: "conscious-spending", name: "Conscious Spending Plan", kind: "Metodologia", eyebrow: "Prioridades sem microgestão",
+    summary: "Organiza o dinheiro em custos fixos, investimentos, poupança e gasto sem culpa.", category: "Percentual",
+    tags: ["valores", "automação"], bestFor: "Quem quer priorizar o que importa e automatizar o restante sem controlar cada compra.",
+    control: "Panorama", effort: "Baixo", automation: "Alta", region: "Internacional", icon: Heart,
+    recommendationTags: ["iniciantes", "poupar", "investir", "valores", "baixa-manutenção"],
+    strengths: ["Conecta orçamento a valores pessoais", "Simplifica decisões recorrentes", "Funciona bem com automação"],
+    attention: ["Percentuais são referências, não regras universais", "Não detalha cada categoria", "Pode exigir adaptação à renda local"],
+    source: { label: "I Will Teach You To Be Rich — Conscious Spending", url: "https://www.iwillteachyoutoberich.com/conscious-spending-basics/" },
+  },
+  {
+    id: "everydollar", name: "EveryDollar", kind: "Plataforma", eyebrow: "Base zero guiada",
+    summary: "Aplicativo de orçamento base zero que ajuda a planejar e acompanhar o dinheiro de forma simples.", category: "App internacional",
+    tags: ["base zero", "início guiado"], bestFor: "Quem quer começar com um orçamento detalhado, mas precisa de uma ferramenta que conduza o passo a passo.",
+    control: "Detalhado", effort: "Médio", automation: "Assistida", region: "Internacional", icon: Compass,
+    recommendationTags: ["iniciantes", "quitar-dividas", "detalhista", "planejamento"],
+    strengths: ["Método explícito e fácil de entender", "Boa porta de entrada para planejamento", "Ajuda a dar função à renda"],
+    attention: ["Disponibilidade regional pode variar", "Recursos dependem do plano", "Exige revisão frequente"],
+    source: { label: "Ramsey — EveryDollar", url: "https://www.ramseysolutions.com/money/everydollar" },
+  },
+  {
+    id: "copilot", name: "Copilot Money", kind: "Plataforma", eyebrow: "Visão inteligente",
+    summary: "Acompanha gastos, orçamentos, investimentos e patrimônio em uma experiência digital integrada.", category: "App internacional",
+    tags: ["patrimônio", "recomendações"], bestFor: "Quem valoriza uma visão consolidada e quer reduzir o trabalho manual de acompanhamento.",
+    control: "Panorama detalhado", effort: "Baixo a médio", automation: "Alta", region: "Internacional", icon: Laptop,
+    recommendationTags: ["iniciantes", "patrimonio", "poupar", "alta-automacao", "baixa-manutenção"],
+    strengths: ["Reúne gastos, investimentos e patrimônio", "Tem proposta de recomendações", "Baixa manutenção no dia a dia"],
+    attention: ["Pode não atender bancos brasileiros", "Modelo de assinatura", "Conexões externas precisam ser conferidas"],
+    source: { label: "Site oficial do Copilot Money", url: "https://www.copilot.money/" },
+  },
+  {
+    id: "simplifi", name: "Quicken Simplifi", kind: "Plataforma", eyebrow: "Orçamento preditivo",
+    summary: "Centraliza contas e acompanha gastos, orçamento, contas recorrentes e investimentos.", category: "App internacional",
+    tags: ["previsões", "contas"], bestFor: "Quem quer antecipar despesas e ter uma leitura simples do dinheiro que ainda está disponível.",
+    control: "Panorama detalhado", effort: "Baixo a médio", automation: "Alta", region: "Internacional", icon: Layers3,
+    recommendationTags: ["iniciantes", "renda-variavel", "alta-automacao", "baixa-manutenção", "contas"],
+    strengths: ["Foco em antecipação e previsibilidade", "Combina orçamento e visão de contas", "Automação reduz lançamentos"],
+    attention: ["Cobertura bancária varia por país", "Assinatura e idioma entram na decisão", "Menos adequado a quem quer envelopes rigorosos"],
+    source: { label: "Quicken Simplifi — site oficial", url: "https://simplifi.quicken.com/" },
+  },
+  {
+    id: "tiller", name: "Tiller Money", kind: "Plataforma", eyebrow: "Planilha automatizada",
+    summary: "Conecta bancos a planilhas e automatiza gastos, receitas, saldos, categorias, dívidas e patrimônio.", category: "Planilha digital",
+    tags: ["planilhas", "customização"], bestFor: "Quem gosta de planilhas e quer personalizar o nível de detalhe sem abrir mão de automação.",
+    control: "Detalhado", effort: "Médio", automation: "Alta", region: "Internacional", icon: WalletCards,
+    recommendationTags: ["detalhista", "renda-variavel", "patrimonio", "alta-automacao", "planilhas"],
+    strengths: ["Flexibilidade de templates", "Automatiza a alimentação da planilha", "Pode acompanhar orçamento, dívidas e patrimônio"],
+    attention: ["Exige conforto com planilhas", "Conexões dependem da região", "Personalização aumenta a responsabilidade de manutenção"],
+    source: { label: "Tiller — como funciona", url: "https://tiller.com/how-tiller-works/" },
+  },
+  {
+    id: "empower", name: "Empower Personal Dashboard", kind: "Plataforma", eyebrow: "Patrimônio e planejamento",
+    summary: "Reúne orçamento, planejamento, carteira de investimentos, aposentadoria e patrimônio líquido.", category: "Patrimônio",
+    tags: ["investimentos", "aposentadoria"], bestFor: "Quem quer acompanhar o patrimônio e tomar decisões de longo prazo além do orçamento mensal.",
+    control: "Panorama", effort: "Baixo a médio", automation: "Alta", region: "Internacional", icon: Landmark,
+    recommendationTags: ["patrimonio", "investir", "poupar", "alta-automacao", "baixa-manutenção"],
+    strengths: ["Visão ampla de patrimônio", "Inclui planejamento de orçamento e aposentadoria", "Conexão de contas reduz trabalho manual"],
+    attention: ["Não é a melhor escolha para orçamento granular", "Foco regional nos Estados Unidos", "Orientação não substitui aconselhamento individual"],
+    source: { label: "Empower — ferramentas financeiras", url: "https://www.empower.com/tools" },
+  },
+  {
+    id: "pocketguard", name: "PocketGuard", kind: "Plataforma", eyebrow: "Saldo disponível",
+    summary: "Acompanha gastos, orçamentos, dívidas, metas e patrimônio líquido com sincronização automática.", category: "App internacional",
+    tags: ["saldo disponível", "dívidas"], bestFor: "Quem quer saber quanto pode gastar e precisa de ajuda para controlar dívidas e recorrências.",
+    control: "Panorama detalhado", effort: "Baixo", automation: "Alta", region: "Internacional", icon: CircleDollarSign,
+    recommendationTags: ["iniciantes", "quitar-dividas", "alta-automacao", "baixa-manutenção", "renda-variavel"],
+    strengths: ["Conecta gastos e saldo disponível", "Inclui metas e plano para dívidas", "Automatiza a sincronização"],
+    attention: ["Disponibilidade concentrada em alguns países", "Assinatura/trial devem ser conferidos", "Pode oferecer menos granularidade que uma planilha"],
+    source: { label: "Site oficial do PocketGuard", url: "https://pocketguard.com/" },
+  },
+  {
+    id: "buckets", name: "Buckets", kind: "Plataforma", eyebrow: "Privacidade local",
+    summary: "Aplicativo privado de orçamento, com envelopes, dados no computador e licença sem mensalidade.", category: "App internacional",
+    tags: ["privacidade", "envelopes"], bestFor: "Quem quer um sistema de envelopes com controle sobre os próprios dados e baixo custo recorrente.",
+    control: "Detalhado", effort: "Médio", automation: "Manual ou assistida", region: "Internacional", icon: ShieldCheck,
+    recommendationTags: ["detalhista", "privacidade", "envelopes", "media-manutencao", "baixa-automacao"],
+    strengths: ["Dados ficam no computador", "Pagamento único", "Permite envelopes ou estilo próprio"],
+    attention: ["Sincronização bancária é opcional e depende de ponte externa", "Exige configuração inicial", "Pode não ter a conveniência de um agregador online"],
+    source: { label: "Site oficial do Buckets", url: "https://www.budgetwithbuckets.com/" },
+  },
+  {
+    id: "lunch-money", name: "Lunch Money", kind: "Plataforma", eyebrow: "Dados e personalização",
+    summary: "Oferece importação bancária ou por CSV, orçamentos mensais, regras, múltiplas moedas e patrimônio.", category: "App internacional",
+    tags: ["multimoeda", "regras"], bestFor: "Quem quer flexibilidade, dados detalhados e recursos avançados para personalizar a organização financeira.",
+    control: "Detalhado", effort: "Médio", automation: "Assistida ou alta", region: "Internacional", icon: BarChart3,
+    recommendationTags: ["detalhista", "renda-variavel", "patrimonio", "media-manutencao", "multimoeda"],
+    strengths: ["Importação por diferentes caminhos", "Regras e filtros para usuários avançados", "Acompanha patrimônio e múltiplas moedas"],
+    attention: ["Curva de aprendizado maior", "Integrações variam por localidade", "Mais recursos podem significar mais configuração"],
+    source: { label: "Site oficial do Lunch Money", url: "https://lunchmoney.app/" },
+  },
+  {
+    id: "actual-budget", name: "Actual Budget", kind: "Plataforma", eyebrow: "Open source e envelopes",
+    summary: "Projeto open source de orçamento com foco em privacidade, personalização e lógica de envelopes.", category: "Open source",
+    tags: ["privacidade", "open source"], bestFor: "Quem aceita configurar uma ferramenta mais técnica para ter flexibilidade e controle sobre os dados.",
+    control: "Detalhado", effort: "Alto", automation: "Manual ou assistida", region: "Internacional", icon: ShieldCheck,
+    recommendationTags: ["detalhista", "privacidade", "envelopes", "alta-manutencao", "baixa-automacao"],
+    strengths: ["Código aberto e comunidade", "Boa aderência a envelopes", "Pode ser hospedado e adaptado"],
+    attention: ["Instalação e manutenção podem ser técnicas", "Conexões dependem da configuração", "A documentação e a cobertura regional devem ser verificadas"],
+    source: { label: "Actual Budget — site institucional", url: "https://actualbudget.org/" },
+  },
 ];
 
 export const categoryLabels = ["Todas", ...Array.from(new Set(entries.map((entry) => entry.category)))];
+
+export type EffortFilter = "Todos" | "Baixo" | "Médio" | "Alto";
+export type AutomationFilter = "Todas" | "Baixa" | "Assistida" | "Alta";
+
+export const getEffortLevel = (effort: string): Exclude<EffortFilter, "Todos"> => effort.includes("Alto") ? "Alto" : effort.includes("Baixo") ? "Baixo" : "Médio";
+export const getAutomationLevel = (automation: string): Exclude<AutomationFilter, "Todas"> => automation.toLowerCase().includes("alta") ? "Alta" : automation.toLowerCase().includes("assistida") ? "Assistida" : "Baixa";
+
+export type RecommendationAnswers = { profile: string; goal: string; effort: string; automation: string };
+export const recommendEntries = (answers: RecommendationAnswers) => {
+  const tags = Object.values(answers).filter(Boolean);
+  return entries.map(entry => ({ entry, score: (entry.recommendationTags || []).filter(tag => tags.includes(tag)).length }))
+    .filter(result => result.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(result => result.entry);
+};
 
 export const kindIcon = (kind: EntryKind) => kind === "Plataforma" ? Laptop : BookOpen;
