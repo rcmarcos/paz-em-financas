@@ -35,6 +35,44 @@ export const calculateBudget = (income: number, method: BudgetMethod): BudgetAll
   }));
 };
 
+export type EmergencyFundGoal = {
+  essentialExpenses: number;
+  months: number;
+  currentReserve: number;
+  monthlyContribution: number;
+  targetAmount: number;
+  remainingAmount: number;
+  progressPercentage: number;
+  monthsToGoal: number | null;
+};
+
+export const calculateEmergencyFund = (
+  essentialExpenses: number,
+  months: number,
+  currentReserve: number,
+  monthlyContribution: number,
+): EmergencyFundGoal => {
+  const safeExpenses = Number.isFinite(essentialExpenses) && essentialExpenses > 0 ? essentialExpenses : 0;
+  const safeMonths = Number.isFinite(months) && months > 0 ? months : 0;
+  const safeCurrent = Number.isFinite(currentReserve) && currentReserve > 0 ? currentReserve : 0;
+  const safeContribution = Number.isFinite(monthlyContribution) && monthlyContribution > 0 ? monthlyContribution : 0;
+  const targetAmount = Math.round(safeExpenses * safeMonths * 100) / 100;
+  const remainingAmount = Math.max(0, Math.round((targetAmount - safeCurrent) * 100) / 100);
+  const progressPercentage = targetAmount > 0 ? Math.min(100, Math.round((safeCurrent / targetAmount) * 1000) / 10) : 0;
+  const monthsToGoal = remainingAmount === 0 ? 0 : safeContribution > 0 ? Math.ceil(remainingAmount / safeContribution) : null;
+
+  return {
+    essentialExpenses: safeExpenses,
+    months: safeMonths,
+    currentReserve: safeCurrent,
+    monthlyContribution: safeContribution,
+    targetAmount,
+    remainingAmount,
+    progressPercentage,
+    monthsToGoal,
+  };
+};
+
 export const budgetMethodLabels: Record<BudgetMethod, string> = {
   "503020": "Regra 50/30/20",
   "conscious-spending": "Conscious Spending Plan",

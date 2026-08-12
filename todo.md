@@ -49,3 +49,9 @@
 - [x] Implementar exportação em PDF de checklists, favoritos e resultados da calculadora.
 - [x] Validar PDF, gráfico e responsividade em desktop e móvel.
 - [x] Salvar o checkpoint publicado da atualização.
+
+
+- [x] Adicionar campos de meta, reserva atual e aporte mensal à calculadora.
+- [x] Exibir progresso percentual e prazo estimado para atingir a reserva.
+- [x] Incluir os dados da reserva no relatório PDF exportado.
+- [x] Validar a nova funcionalidade em desktop e móvel e salvar checkpoint.

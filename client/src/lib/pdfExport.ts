@@ -7,6 +7,16 @@ type StoredCalculatorResult = {
   income: number;
   method: BudgetMethod;
   allocations: { label: string; percentage: number; amount: number }[];
+  emergencyFund?: {
+    essentialExpenses: number;
+    months: number;
+    currentReserve: number;
+    monthlyContribution: number;
+    targetAmount: number;
+    remainingAmount: number;
+    progressPercentage: number;
+    monthsToGoal: number | null;
+  };
 };
 
 const currency = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
@@ -78,6 +88,18 @@ export const exportPersonalReport = () => {
     calculator.allocations.forEach(allocation => paragraph(`${allocation.label}: ${allocation.percentage}% — ${currency.format(allocation.amount)}`, 10));
   } else {
     paragraph("Nenhuma simulação foi salva ainda. Visite a calculadora no portal para criar seu primeiro cenário.", 10);
+  }
+  y += 5;
+
+  heading("Meta de reserva de emergência");
+  if (calculator?.emergencyFund) {
+    const goal = calculator.emergencyFund;
+    const deadline = goal.monthsToGoal === null ? "prazo não definido (informe um aporte mensal)" : goal.monthsToGoal === 0 ? "meta já alcançada" : `${goal.monthsToGoal} ${goal.monthsToGoal === 1 ? "mês" : "meses"}`;
+    paragraph(`Alvo de ${goal.months} ${goal.months === 1 ? "mês" : "meses"} de despesas essenciais: ${currency.format(goal.targetAmount)}.`, 10);
+    paragraph(`Reserva atual: ${currency.format(goal.currentReserve)} (${goal.progressPercentage}% concluída). Falta acumular ${currency.format(goal.remainingAmount)}.`, 10);
+    paragraph(`Aporte mensal planejado: ${currency.format(goal.monthlyContribution)}. Prazo estimado: ${deadline}.`, 10);
+  } else {
+    paragraph("Nenhuma meta de reserva foi salva ainda. Visite a calculadora para definir despesas essenciais, meses de proteção e aporte mensal.", 10);
   }
   y += 5;
 
