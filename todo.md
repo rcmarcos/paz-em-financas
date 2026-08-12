@@ -74,3 +74,10 @@
 - [x] Validar o AppImage final em execução isolada com estado local limpo.
 - [x] Executar o AppImage com perfil Electron novo e limpar todas as chaves de localStorage antes do smoke test.
 - [x] Confirmar transições de primeiro uso: checklist 0→1, calculadora grava nova renda e mapa grava cenário atualizado.
+- [ ] Gerar e validar o artefato Windows NSIS em host Windows ou CI Windows.
+- [ ] Gerar e validar artefatos macOS DMG e ZIP em host macOS ou CI macOS.
+- [x] Configurar pipeline CI multiplataforma para gerar NSIS, Portable, DMG e ZIP.
+- [x] Usar nomes de artefato distintos para Windows NSIS e Portable.
+- [x] Gerar e validar o artefato Windows Portable x64 no sandbox Linux.
+- [ ] Executar o artefato Windows Portable x64 em host ou CI Windows e validar abertura offline.
+- [ ] Registrar evidências da execução Windows Portable e dos fluxos principais.

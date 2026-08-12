@@ -12,9 +12,49 @@ Links externos para fontes oficiais continuam visíveis para consulta quando hou
 
 Na raiz do projeto, instale as dependências com `pnpm install`. Para abrir o modo de desenvolvimento com hot reload, execute `pnpm desktop:dev`. Para produzir a build web local usada pelo Electron, execute `pnpm desktop:build`.
 
-## Empacotamento
+## Guia de Empacotamento Nativo por Sistema Operacional
 
-`pnpm desktop:package` executa o build e chama o Electron Builder. Em um host macOS, gera DMG e ZIP; em um host Windows, gera instalador NSIS e executável portátil; em Linux, gera AppImage para validação local. A assinatura de código e o notarization devem ser configurados pelo distribuidor com certificados próprios antes da publicação pública.
+Como o **Paz em Finanças** utiliza o Electron, a compilação de instaladores nativos binários requer que o comando seja executado no sistema operacional de destino (ou através de pipelines CI/CD configuradas para cada plataforma). Abaixo estão os procedimentos detalhados para cada ambiente:
+
+### 1. macOS (Geração de .dmg e .zip)
+* **Requisitos:** Um computador rodando macOS com Node.js, pnpm e Xcode Command Line Tools instalados (`xcode-select --install`).
+* **Passos no terminal:**
+  ```bash
+  git clone <seu-repositorio>
+  cd portal-financas-pessoais
+  pnpm install
+  pnpm desktop:build
+  pnpm exec electron-builder --mac --config desktop/electron-builder.yml
+  ```
+* **Artefatos gerados:** `release/Paz em Finanças-1.0.0-mac-x64.dmg` (ou `arm64` para chips Apple Silicon M1/M2/M3).
+
+### 2. Windows (Geração de instalador NSIS .exe e versão Portable)
+* **Requisitos:** Um computador rodando Windows (ou ambiente CI Windows) com Node.js e pnpm instalados.
+* **Passos no Prompt de Comando / PowerShell:**
+  ```cmd
+  git clone <seu-repositorio>
+  cd portal-financas-pessoais
+  pnpm install
+  pnpm desktop:build
+  pnpm exec electron-builder --win --config desktop/electron-builder.yml
+  ```
+* **Artefatos gerados:**
+  * `release/Paz em Finanças-Setup-1.0.0-x64.exe` (instalador assistido com atalhos e desinstalador).
+  * `release/Paz em Finanças-Portable-1.0.0-x64.exe` (versão executável portátil sem instalação).
+
+### 3. Linux (Geração de AppImage)
+* **Requisitos:** Ambiente Linux (como o sandbox atual).
+* **Passos no terminal:**
+  ```bash
+  pnpm desktop:package
+  ```
+* **Artefato gerado:** `release/Paz em Finanças-1.0.0-linux-x86_64.AppImage`.
+
+### 4. Pipeline CI nativo
+
+O arquivo `.github/workflows/desktop-build.yml` gera os quatro alvos em runners nativos: macOS produz DMG e ZIP; Windows produz NSIS e Portable. O workflow também executa um smoke test do Portable no runner Windows antes de publicar os artefatos como uma ação do GitHub. Para utilizá-lo, envie o projeto a um repositório GitHub e execute **Actions → Desktop installers → Run workflow**, ou crie uma tag no formato `v1.0.0`.
+
+No sandbox Linux, o artefato Portable x64 foi gerado com sucesso. A tentativa de NSIS foi bloqueada pela execução Wine do bootstrap Windows; os instaladores macOS não podem ser produzidos nativamente neste host Linux. Por isso, o workflow CI é o caminho recomendado para obter validação funcional Windows e os artefatos macOS.
 
 ## Privacidade
 

@@ -22,8 +22,11 @@ win:
     - portable
   artifactName: ${productName}-${version}-windows-${arch}.${ext}
 nsis:
+  artifactName: ${productName}-Setup-${version}-${arch}.${ext}
   oneClick: false
   allowToChangeInstallationDirectory: true
+portable:
+  artifactName: ${productName}-Portable-${version}-${arch}.${ext}
 linux:
   category: Office
   target:
