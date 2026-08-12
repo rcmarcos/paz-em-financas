@@ -1,7 +1,7 @@
 /* Atlas Editorial: fichas com marcadores terracota, selos de método e leitura comparável. */
 import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
-import { ArrowUpRight, Check, CheckCircle2, Clock3, ExternalLink, Gauge, Laptop, Plus, Sparkles, Tag, X } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight, Check, CheckCircle2, ChevronDown, Clock3, ExternalLink, Gauge, HelpCircle, Laptop, Plus, Sparkles, Tag, X } from "lucide-react";
 import { entries, recommendEntries, type Entry } from "@/lib/catalog";
 import { kindIcon } from "@/lib/catalog";
 import { practicalGuides, getPracticalGuide } from "@/lib/guides";
@@ -86,7 +86,25 @@ export function AssistantPanel({ onClose, onSelect }: { onClose: () => void; onS
 
 export function PracticalGuidesSection() {
   const [activeGuideId, setActiveGuideId] = useState("503020");
+  const [completedSteps, setCompletedSteps] = useState<Record<string, boolean>>({});
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   const currentGuide = getPracticalGuide(activeGuideId);
+
+  const toggleStep = (stepKey: string) => {
+    setCompletedSteps(prev => ({ ...prev, [stepKey]: !prev[stepKey] }));
+  };
+
+  const handleDownloadCsv = () => {
+    const blob = new Blob([currentGuide.spreadsheetCsv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", currentGuide.spreadsheetFilename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="guides-section" id="guias-praticos">
@@ -95,7 +113,7 @@ export function PracticalGuidesSection() {
           <p className="overline"><span className="overline-dot" /> Passo a passo diário</p>
           <h2>Como colocar em prática.</h2>
         </div>
-        <p className="catalog-description">Escolha uma metodologia para ver o passo a passo detalhado de implementação na sua rotina, com orientações diretas e sem complicação.</p>
+        <p className="catalog-description">Escolha uma metodologia para ver o passo a passo detalhado de implementação na sua rotina, baixar templates e tirar dúvidas frequentes.</p>
       </div>
 
       <div className="guides-layout">
@@ -105,9 +123,9 @@ export function PracticalGuidesSection() {
               key={guide.id}
               type="button"
               className={`guide-tab-button ${guide.id === activeGuideId ? "active" : ""}`}
-              onClick={() => setActiveGuideId(guide.id)}
+              onClick={() => { setActiveGuideId(guide.id); setOpenFaq(null); }}
             >
-              <span>{guide.title.replace("Como implementar a ", "").replace("Como aplicar o ", "").replace("Como dominar o ", "").replace("Como estruturar seu ", "").replace("Como planejar ", "")}</span>
+              <span>{guide.title.replace("Como implementar a ", "").replace("Como aplicar o ", "").replace("Como dominar o ", "").replace("Como estruturar seu ", "").replace("Como planejar ", "").replace("Como estruturar um ", "")}</span>
               <span className="guide-tab-meta">{guide.difficulty} · {guide.timeframe}</span>
             </button>
           ))}
@@ -120,26 +138,67 @@ export function PracticalGuidesSection() {
               <h3>{currentGuide.title}</h3>
               <p>{currentGuide.subtitle}</p>
             </div>
-            <div className="guide-timeframe-box">
-              <Clock3 size={16} />
-              <span>{currentGuide.timeframe}</span>
+            <div className="guide-header-actions">
+              <div className="guide-timeframe-box">
+                <Clock3 size={15} />
+                <span>{currentGuide.timeframe}</span>
+              </div>
+              <button type="button" className="download-sheet-button" onClick={handleDownloadCsv}>
+                <ArrowDownToLine size={15} /> Baixar planilha ({currentGuide.spreadsheetTitle})
+              </button>
             </div>
           </div>
 
           <div className="guide-steps-list">
-            {currentGuide.steps.map((step, index) => (
-              <div key={index} className="guide-step-item">
-                <div className="guide-step-num">{index + 1}</div>
-                <div className="guide-step-body">
-                  <h4>{step.title}</h4>
-                  <p>{step.description}</p>
-                  <div className="guide-step-action">
-                    <strong>Ação prática:</strong> {step.action}
+            <p className="guide-checklist-intro">Marque os passos conforme avançar na sua rotina:</p>
+            {currentGuide.steps.map((step, index) => {
+              const stepKey = `${activeGuideId}-${index}`;
+              const isChecked = !!completedSteps[stepKey];
+              return (
+                <div key={index} className={`guide-step-item ${isChecked ? "step-completed" : ""}`}>
+                  <button
+                    type="button"
+                    className={`guide-checkbox-btn ${isChecked ? "checked" : ""}`}
+                    onClick={() => toggleStep(stepKey)}
+                    aria-label={`Marcar passo ${index + 1} como concluído`}
+                  >
+                    {isChecked && <Check size={14} />}
+                  </button>
+                  <div className="guide-step-body">
+                    <h4>{step.title}</h4>
+                    <p>{step.description}</p>
+                    <div className="guide-step-action">
+                      <strong>Ação prática:</strong> {step.action}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
+
+          {currentGuide.faqs && currentGuide.faqs.length > 0 && (
+            <div className="guide-faq-section">
+              <h4 className="guide-faq-heading"><HelpCircle size={16} /> Perguntas frequentes sobre este método</h4>
+              <div className="guide-faq-list">
+                {currentGuide.faqs.map((faq, fIndex) => {
+                  const isOpen = openFaq === fIndex;
+                  return (
+                    <div key={fIndex} className={`guide-faq-item ${isOpen ? "open" : ""}`}>
+                      <button
+                        type="button"
+                        className="guide-faq-question"
+                        onClick={() => setOpenFaq(isOpen ? null : fIndex)}
+                      >
+                        <span>{faq.question}</span>
+                        <ChevronDown size={16} className={`faq-chevron ${isOpen ? "rotated" : ""}`} />
+                      </button>
+                      {isOpen && <div className="guide-faq-answer"><p>{faq.answer}</p></div>}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           <div className="guide-card-footer">
             <Sparkles size={16} />

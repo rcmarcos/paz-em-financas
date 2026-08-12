@@ -1,11 +1,26 @@
+export type GuideStep = {
+  title: string;
+  description: string;
+  action: string;
+};
+
+export type GuideFaq = {
+  question: string;
+  answer: string;
+};
+
 export type PracticalGuide = {
   id: string;
   title: string;
   subtitle: string;
   difficulty: "Baixa" | "Média" | "Alta";
   timeframe: string;
-  steps: { title: string; description: string; action: string }[];
+  steps: GuideStep[];
   toolTip: string;
+  spreadsheetTitle: string;
+  spreadsheetFilename: string;
+  spreadsheetCsv: string;
+  faqs: GuideFaq[];
 };
 
 export const practicalGuides: PracticalGuide[] = [
@@ -37,7 +52,20 @@ export const practicalGuides: PracticalGuide[] = [
         action: "Programe uma transferência automática no dia útil seguinte ao recebimento."
       }
     ],
-    toolTip: "Ideal para quem quer tranquilidade sem o peso de registrar cada centavo em uma planilha."
+    toolTip: "Ideal para quem quer tranquilidade sem o peso de registrar cada centavo em uma planilha.",
+    spreadsheetTitle: "Template Regra 50-30-20.csv",
+    spreadsheetFilename: "regra-50-30-20-template.csv",
+    spreadsheetCsv: "Bloco Orçamentário,Percentual Meta,Valor Calculado (R$),Exemplos de Gastos,Status Atual\nNecessidades,50%,2500.00,Aluguel, Mercado, Contas,Em andamento\nDesejos,30%,1500.00,Lazer, Restaurantes, Streaming,Em andamento\nPrioridades e Futuro,20%,1000.00,Investimentos e Reserva,Planejado\n",
+    faqs: [
+      {
+        question: "E se minhas necessidades ultrapassarem 50% da renda?",
+        answer: "Isso é muito comum em grandes cidades ou em momentos de transição. O segredo é tratar o 50% como uma meta de longo prazo e buscar renegociar custos fixos gradualmente."
+      },
+      {
+        question: "Devo usar a renda bruta ou a líquida para o cálculo?",
+        answer: "Sempre utilize a renda líquida (o dinheiro que efetivamente cai na sua conta após impostos e descontos obrigatórios)."
+      }
+    ]
   },
   {
     id: "zero-based",
@@ -67,7 +95,20 @@ export const practicalGuides: PracticalGuide[] = [
         action: "Reserve a sexta-feira ou o domingo para olhar o painel de controle."
       }
     ],
-    toolTip: "Perfeito para quem quer assumir o comando absoluto de cada centavo e evitar surpresas."
+    toolTip: "Perfeito para quem quer assumir o comando absoluto de cada centavo e evitar surpresas.",
+    spreadsheetTitle: "Template Base Zero.csv",
+    spreadsheetFilename: "orcamento-base-zero-template.csv",
+    spreadsheetCsv: "Categoria,Planejado (R$),Realizado (R$),Diferença (R$),Observações\nReceita Total,5000.00,5000.00,0.00,Renda líquida esperada\nMoradia e Contas,2000.00,1950.00,+50.00,Aluguel e luz\nAlimentação e Mercado,900.00,920.00,-20.00,Compras do mês\nTransporte,400.00,380.00,+20.00,Combustível e transporte\nReserva e Investimentos,1000.00,1000.00,0.00,Aporte automático\nLazer e Gastos Pessoais,700.00,750.00,-50.00,Passeios e jantares\n",
+    faqs: [
+      {
+        question: "O que significa 'base zero' na prática?",
+        answer: "Significa que a conta final (Receitas menos Despesas e Investimentos) deve dar exatamente zero. Cada real tem um trabalho atribuído."
+      },
+      {
+        question: "Como lidar com imprevistos no orçamento base zero?",
+        answer: "Sempre mantenha uma categoria de 'Imprevistos' ou ajuste realocando saldo de uma categoria de menor prioridade."
+      }
+    ]
   },
   {
     id: "envelope",
@@ -92,7 +133,16 @@ export const practicalGuides: PracticalGuide[] = [
         action: "Deixe cartões de crédito guardados para evitar compras impulsivas nas categorias críticas."
       }
     ],
-    toolTip: "Excelente para quem aprende mais rápido com limites visuais e concretos."
+    toolTip: "Excelente para quem aprende mais rápido com limites visuais e concretos.",
+    spreadsheetTitle: "Template Envelopes Virtuais.csv",
+    spreadsheetFilename: "orcamento-envelopes-template.csv",
+    spreadsheetCsv: "Envelope,Orçamento Inicial (R$),Gasto Atual (R$),Saldo Restante (R$),Status\nSupermercado,800.00,520.00,280.00,Disponível\nRestaurantes e Delivery,300.00,290.00,10.00,Atenção\nFarmácia e Saúde,200.00,80.00,120.00,Disponível\nLazer e Passeios,300.00,300.00,0.00,Esgotado\n",
+    faqs: [
+      {
+        question: "Preciso usar dinheiro em espécie obrigatoriamente?",
+        answer: "Não. Embora o dinheiro físico tenha forte impacto psicológico, você pode usar contas separadas, subcontas bancárias ou aplicativos que criam envelopes virtuais."
+      }
+    ]
   },
   {
     id: "pay-yourself",
@@ -117,7 +167,16 @@ export const practicalGuides: PracticalGuide[] = [
         action: "Monitore o saldo restante sem culpa, sabendo que sua prioridade já foi protegida."
       }
     ],
-    toolTip: "A escolha definitiva para quem costuma gastar tudo o que sobra na conta."
+    toolTip: "A escolha definitiva para quem costuma gastar tudo o que sobra na conta.",
+    spreadsheetTitle: "Template Pague-se Primeiro.csv",
+    spreadsheetFilename: "pague-se-primeiro-template.csv",
+    spreadsheetCsv: "Meta de Poupança,Valor Alvo (R$),Aporte Mensal (R$),Data de Programação,Status\nReserva de Emergência,15000.00,500.00,Todo dia 6,Ativo\nInvestimento de Longo Prazo,50000.00,300.00,Todo dia 6,Ativo\n",
+    faqs: [
+      {
+        question: "O que fazer se o valor poupado faltar no final do mês?",
+        answer: "Reduza o valor da transferência automática no mês seguinte para um patamar sustentável e aumente gradualmente."
+      }
+    ]
   },
   {
     id: "sinking-funds",
@@ -142,7 +201,16 @@ export const practicalGuides: PracticalGuide[] = [
         action: "Acompanhe o crescimento dos fundos no seu painel de controle."
       }
     ],
-    toolTip: "Elimina o estresse das faturas de início de ano e de grandes manutenções."
+    toolTip: "Elimina o estresse das faturas de início de ano e de grandes manutenções.",
+    spreadsheetTitle: "Template Fundos Futuros.csv",
+    spreadsheetFilename: "fundos-futuros-template.csv",
+    spreadsheetCsv: "Despesa Sazonal,Valor Total (R$),Mês de Vencimento,Reserva Mensal (R$),Acumulado Atual (R$)\nIPVA e Licenciamento,2400.00,Janeiro,200.00,1200.00\nIPTU Residencial,1800.00,Fevereiro,150.00,900.00\nViagem de Férias,3600.00,Julho,300.00,1800.00\n",
+    faqs: [
+      {
+        question: "Qual a diferença entre fundo futuro e reserva de emergência?",
+        answer: "A reserva de emergência é para imprevistos absolutos (saúde, desemprego). Os fundos futuros são para gastos já sabidos, mas que ocorrem em datas específicas."
+      }
+    ]
   },
   {
     id: "cash-flow",
@@ -167,7 +235,16 @@ export const practicalGuides: PracticalGuide[] = [
         action: "Defina um piso intocável na conta corrente para amortecer oscilações."
       }
     ],
-    toolTip: "Indispensável para freelancers, autônomos e quem lida com recebimentos irregulares."
+    toolTip: "Indispensável para freelancers, autônomos e quem lida com recebimentos irregulares.",
+    spreadsheetTitle: "Template Fluxo de Caixa.csv",
+    spreadsheetFilename: "fluxo-de-caixa-template.csv",
+    spreadsheetCsv: "Data,Descrição,Tipo (Entrada/Saída),Valor (R$),Saldo Projetado (R$)\n05/08/2026,Salário / Honorários,Entrada,5000.00,5000.00\n06/08/2026,Aluguel,Saída,1500.00,3500.00\n10/08/2026,Supermercado,Saída,400.00,3100.00\n15/08/2026,Cartão de Crédito,Saída,1200.00,1900.00\n",
+    faqs: [
+      {
+        question: "Como gerenciar o fluxo de caixa com renda incerta?",
+        answer: "Projete seus gastos essenciais com base no seu pior mês histórico e viva sempre com base nessa linha conservadora."
+      }
+    ]
   },
   {
     id: "values-based",
@@ -192,7 +269,16 @@ export const practicalGuides: PracticalGuide[] = [
         action: "Crie uma caixinha específica para o valor que você decidiu priorizar."
       }
     ],
-    toolTip: "Transforma o orçamento de uma ferramenta restritiva em um instrumento de realização pessoal."
+    toolTip: "Transforma o orçamento de uma ferramenta restritiva em um instrumento de realização pessoal.",
+    spreadsheetTitle: "Template Valores de Vida.csv",
+    spreadsheetFilename: "orcamento-valores-template.csv",
+    spreadsheetCsv: "Valor Pessoal Prioritário,Gasto Alinhado,Valor Mensal (R$),Impacto na Felicidade (1 a 5),Ação de Ajuste\nTempo em Família,Passeios de fim de semana,400.00,5,Manter e proteger\nLiberdade Profissional,Cursos e capacitação,300.00,5,Expandir aporte\nStatus Social,Roupas de grife por impulso,500.00,2,Cortar sem dó\n",
+    faqs: [
+      {
+        question: "Cortar gastos com base em valores significa virar minimalista radical?",
+        answer: "De forma alguma. Significa apenas eliminar o desperdício em coisas que você não valoriza para gastar sem culpa naquilo que realmente ama."
+      }
+    ]
   },
   {
     id: "conscious-spending",
@@ -222,7 +308,16 @@ export const practicalGuides: PracticalGuide[] = [
         action: "Gaste esse bloco com total tranquilidade, pois os demais pilares já estão blindados."
       }
     ],
-    toolTip: "O guia perfeito para quem quer prosperar sem restrições sufocantes."
+    toolTip: "O guia perfeito para quem quer prosperar sem restrições sufocantes.",
+    spreadsheetTitle: "Template Conscious Spending.csv",
+    spreadsheetFilename: "conscious-spending-template.csv",
+    spreadsheetCsv: "Pilar Consciente,Meta de Percentual,Valor Mensal (R$),O que compõe\nCustos Fixos,55%,2750.00,Moradia, Contas, Mercado, Transporte\nInvestimentos,10%,500.00,Aposentadoria e liberdade\nEconomias de Curto Prazo,10%,500.00,Viagens e grandes trocas\nGastos Sem Culpa,25%,1250.00,Lazer, restaurantes e prazeres\n",
+    faqs: [
+      {
+        question: "Como gastar sem culpa sem me endividar?",
+        answer: "O segredo do Conscious Spending Plan é que você só gasta sem culpa após automatizar os investimentos e garantir os custos fixos."
+      }
+    ]
   }
 ];
 
@@ -254,5 +349,14 @@ export const getPracticalGuide = (id: string) => practicalGuides.find(guide => g
       action: "Coloque um lembrete recorrente no calendário."
     }
   ],
-  toolTip: "Use as orientações da fonte oficial para adaptar esta plataforma ao seu modelo de orçamento."
+  toolTip: "Use as orientações da fonte oficial para adaptar esta plataforma ao seu modelo de orçamento.",
+  spreadsheetTitle: "Template de Acompanhamento Geral.csv",
+  spreadsheetFilename: "template-geral-financas.csv",
+  spreadsheetCsv: "Data,Categoria,Descrição,Valor (R$),Status\n01/08/2026,Receita,Salário Mensal,5000.00,Confirmado\n05/08/2026,Moradia,Aluguel,1500.00,Pago\n10/08/2026,Alimentação,Supermercado,450.00,Pago\n",
+  faqs: [
+    {
+      question: "Como escolher entre uma planilha e um aplicativo automático?",
+      answer: "Se você gosta de personalizar e ter controle total dos dados, use planilhas. Se prefere praticidade e sincronização bancária em tempo real, escolha uma plataforma automatizada."
+    }
+  ]
 };

@@ -57,3 +57,27 @@
 
 @media(max-width:900px){.guides-layout{grid-template-columns:1fr}.guides-tabs{position:relative;top:auto;grid-template-columns:repeat(2,1fr)}.guide-card-panel{padding:22px}}
 @media(max-width:640px){.guides-tabs{grid-template-columns:1fr}}
+
+
+/* Estilos aprimorados para os guias práticos (Download, Checklist e FAQ) */
+.guide-header-actions{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.download-sheet-button{display:inline-flex;align-items:center;gap:7px;border:1px solid #1b4a40;background:#1b4a40;color:#fffaf2;padding:9px 14px;font-size:11px;font-weight:700;border-radius:999px;transition:background 160ms ease-out,transform 160ms ease-out}
+.download-sheet-button:hover{background:#286554;transform:translateY(-1px)}
+.guide-checklist-intro{margin:0 0 16px;color:#7a847b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.guide-step-item{display:grid;grid-template-columns:32px minmax(0,1fr);gap:16px;align-items:flex-start;padding:12px;border:1px solid transparent;transition:background 160ms ease-out,border-color 160ms ease-out}
+.guide-step-item.step-completed{background:#f2f6ed;border-color:#d4e2d1}
+.guide-checkbox-btn{display:grid;place-items:center;width:28px;height:28px;margin-top:2px;border:2px solid #b3c2b1;background:#fffdf8;color:#1b4a40;border-radius:6px;transition:background 160ms ease-out,border-color 160ms ease-out}
+.guide-checkbox-btn.checked{background:#1b4a40;border-color:#1b4a40;color:#fffaf2}
+.guide-faq-section{margin-top:35px;padding-top:24px;border-top:1px solid #ede8dd}
+.guide-faq-heading{display:flex;align-items:center;gap:8px;margin:0 0 16px;color:#1b4a40;font-family:"Fraunces",serif;font-size:18px;font-weight:500}
+.guide-faq-heading svg{color:#c45a3b}
+.guide-faq-list{display:grid;gap:8px}
+.guide-faq-item{border:1px solid #e0dad0;background:#f9f7f0;transition:border-color 160ms ease-out}
+.guide-faq-item.open{border-color:#1b4a40;background:#fffdf8}
+.guide-faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 15px;border:0;background:transparent;color:#1b4a40;text-align:left;font-size:13px;font-weight:700}
+.faq-chevron{transition:transform 200ms ease-out;color:#78847b}
+.faq-chevron.rotated{transform:rotate(180deg)}
+.guide-faq-answer{padding:0 15px 14px;color:#657169;font-size:12px;line-height:1.6;border-top:1px dashed #e8e3d8}
+.guide-faq-answer p{margin:0}
+
+@media(max-width:900px){.guide-header-actions{align-items:flex-start}}
