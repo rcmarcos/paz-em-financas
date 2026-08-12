@@ -23,7 +23,7 @@ run_smoke() {
     return 1
   fi
 
-  PAZ_SMOKE_TEST=true "$executable" --user-data-dir="$user_data" --no-sandbox --disable-gpu --headless >"$log_path" 2>&1 &
+  PAZ_SMOKE_TEST=true "$executable" --user-data-dir="$user_data" --no-sandbox --disable-gpu >"$log_path" 2>&1 &
   local pid=$!
   for _ in $(seq 1 90); do
     [[ -f "$result_path" ]] && break
