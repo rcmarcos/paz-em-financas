@@ -85,7 +85,8 @@
 - [ ] Registrar evidências da validação funcional do NSIS.
 - [ ] Validar DMG e ZIP no CI macOS, confirmando abertura offline do bundle.
 - [ ] Registrar evidências da validação funcional dos artefatos macOS.
-- [ ] Corrigir o smoke test macOS para executar bundles temporários sem quarentena do DMG/ZIP.
+- [x] Corrigir o smoke test macOS para executar bundles temporários sem quarentena do DMG/ZIP.
+- [ ] Adicionar fallback estrutural para validar DMG/ZIP quando o runner macOS não possui WindowServer.
 - [ ] Registrar evidências da execução Windows Portable e dos fluxos principais.
 - [x] Corrigir a instalação do pnpm no workflow CI para os runners macOS e Windows.
 - [ ] Diagnosticar e corrigir o smoke test Windows no runner nativo.
