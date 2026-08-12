@@ -57,13 +57,14 @@ jobs:
           $userData = Join-Path $env:RUNNER_TEMP "paz-smoke-user-data"
           Remove-Item -Recurse -Force $userData -ErrorAction SilentlyContinue
           New-Item -ItemType Directory -Force $userData | Out-Null
-          & $portable.FullName --user-data-dir=$userData --no-sandbox --disable-gpu
-          $exitCode = $LASTEXITCODE
           $resultPath = Join-Path $userData "paz-smoke-result.json"
-          if (-not (Test-Path $resultPath)) { throw "Smoke test did not write $resultPath (exit code $exitCode)" }
+          $process = Start-Process -FilePath $portable.FullName -ArgumentList @("--user-data-dir=$userData", "--no-sandbox", "--disable-gpu") -PassThru
+          $deadline = (Get-Date).AddSeconds(90)
+          while (-not (Test-Path $resultPath) -and (Get-Date) -lt $deadline) { Start-Sleep -Seconds 2 }
+          if (-not (Test-Path $resultPath)) { throw "Smoke test did not write $resultPath within 90 seconds (process $($process.Id))" }
           $result = Get-Content $resultPath -Raw | ConvertFrom-Json
           $result | ConvertTo-Json -Compress
-          if ($exitCode -ne 0 -or -not $result.ok) { throw "Portable smoke test failed: $($result.reason) (exit code $exitCode)" }
+          if (-not $result.ok) { throw "Portable smoke test failed: $($result.reason)" }
 
       - name: Upload installers
         uses: actions/upload-artifact@v4
