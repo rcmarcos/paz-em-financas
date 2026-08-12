@@ -76,6 +76,7 @@
 - [x] Confirmar transições de primeiro uso: checklist 0→1, calculadora grava nova renda e mapa grava cenário atualizado.
 - [ ] Gerar e validar o artefato Windows NSIS em host Windows ou CI Windows.
 - [ ] Gerar e validar artefatos macOS DMG e ZIP em host macOS ou CI macOS.
+- [ ] Prioridade atual: executar a geração nativa macOS DMG e ZIP primeiro.
 - [x] Configurar pipeline CI multiplataforma para gerar NSIS, Portable, DMG e ZIP.
 - [x] Usar nomes de artefato distintos para Windows NSIS e Portable.
 - [x] Gerar e validar o artefato Windows Portable x64 no sandbox Linux.
