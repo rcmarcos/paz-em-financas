@@ -214,6 +214,31 @@ export function PracticalGuidesSection() {
             </div>
           )}
 
+          <div className="guide-reflection-section">
+            <h4>Reflexão Pessoal & Conexão com Valores</h4>
+            <p className="guide-reflection-subtitle">Como este método apoia sua tranquilidade e seus objetivos de vida? Anote suas impressões:</p>
+            <textarea
+              className="guide-reflection-input"
+              value={(() => {
+                try {
+                  const stored = JSON.parse(window.localStorage.getItem("atlas-reflections") || "{}");
+                  return stored[activeGuideId] || "";
+                } catch {
+                  return "";
+                }
+              })()}
+              onChange={(e) => {
+                try {
+                  const stored = JSON.parse(window.localStorage.getItem("atlas-reflections") || "{}");
+                  stored[activeGuideId] = e.target.value;
+                  window.localStorage.setItem("atlas-reflections", JSON.stringify(stored));
+                } catch {}
+              }}
+              placeholder="Ex: Este método me ajuda a enxergar para onde vai o dinheiro sem precisar de planilhas complexas, garantindo que o essencial esteja protegido..."
+              rows={3}
+            />
+          </div>
+
           <div className="guide-card-footer">
             <Sparkles size={16} />
             <span><strong>Dica editorial:</strong> {currentGuide.toolTip}</span>

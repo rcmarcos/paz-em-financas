@@ -452,3 +452,159 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Rastreador de experimentos de 7 dias */
+.experiment-days-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.experiment-day-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--graphite);
+  cursor: pointer;
+  transition: all 150ms ease-out;
+}
+
+.experiment-day-chip:hover {
+  border-color: var(--sage-deep);
+}
+
+.experiment-day-chip.completed {
+  background: var(--sage-deep);
+  color: var(--cream);
+  border-color: var(--sage-deep);
+}
+
+/* Área de reflexão pessoal nos guias práticos */
+.guide-reflection-section {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.guide-reflection-section h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  color: var(--graphite);
+}
+
+.guide-reflection-subtitle {
+  margin: 0 0 12px;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.guide-reflection-input {
+  width: 100%;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  color: var(--graphite);
+  outline: none;
+  resize: vertical;
+}
+
+.guide-reflection-input:focus {
+  border-color: var(--sage-deep);
+}
+
+/* Seletor de cenários no Mapa de Paz */
+.peace-header-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.scenario-switcher {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scenario-switcher select {
+  padding: 8px 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--graphite);
+  outline: none;
+}
+
+.outline-button-small {
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid var(--sage-deep);
+  color: var(--sage-deep);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease-out;
+}
+
+.outline-button-small:hover {
+  background: var(--sage-sky);
+}
+
+.scenario-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  background: var(--card);
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.scenario-name-row label {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.scenario-name-row input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 13px;
+  background: var(--background);
+  color: var(--graphite);
+}
+
+.text-button-danger {
+  background: none;
+  border: none;
+  color: #c45a3b;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.text-button-danger:hover {
+  text-decoration: underline;
+}
