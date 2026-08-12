@@ -54,8 +54,16 @@ jobs:
         run: |
           $portable = Get-ChildItem -Path release -Filter "*Portable*.exe" | Select-Object -First 1
           if (-not $portable) { throw "Portable executable not found" }
-          & $portable.FullName --no-sandbox --disable-gpu
-          if ($LASTEXITCODE -ne 0) { throw "Portable smoke test failed with exit code $LASTEXITCODE" }
+          $userData = Join-Path $env:RUNNER_TEMP "paz-smoke-user-data"
+          Remove-Item -Recurse -Force $userData -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force $userData | Out-Null
+          & $portable.FullName --user-data-dir=$userData --no-sandbox --disable-gpu
+          $exitCode = $LASTEXITCODE
+          $resultPath = Join-Path $userData "paz-smoke-result.json"
+          if (-not (Test-Path $resultPath)) { throw "Smoke test did not write $resultPath (exit code $exitCode)" }
+          $result = Get-Content $resultPath -Raw | ConvertFrom-Json
+          $result | ConvertTo-Json -Compress
+          if ($exitCode -ne 0 -or -not $result.ok) { throw "Portable smoke test failed: $($result.reason) (exit code $exitCode)" }
 
       - name: Upload installers
         uses: actions/upload-artifact@v4

@@ -82,4 +82,5 @@
 - [x] Gerar e validar o artefato Windows Portable x64 no sandbox Linux.
 - [ ] Executar o artefato Windows Portable x64 em host ou CI Windows e validar abertura offline.
 - [ ] Registrar evidências da execução Windows Portable e dos fluxos principais.
-- [ ] Corrigir a instalação do pnpm no workflow CI para os runners macOS e Windows.
+- [x] Corrigir a instalação do pnpm no workflow CI para os runners macOS e Windows.
+- [ ] Diagnosticar e corrigir o smoke test Windows no runner nativo.

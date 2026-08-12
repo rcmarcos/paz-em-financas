@@ -1,5 +1,6 @@
 import { app, BrowserWindow, Menu, shell } from "electron";
 import path from "node:path";
+import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -109,9 +110,12 @@ function createWindow() {
           return { ok: true, checks: ["catálogo", "favoritos", "calculadora", "checklists", "mapa", "assistente", "prévia"] };
         })()
       `);
+      await writeFile(path.join(app.getPath("userData"), "paz-smoke-result.json"), JSON.stringify(result), "utf8");
       console.log(`[PAZ_SMOKE_TEST] ${JSON.stringify(result)}`);
       app.exit(result?.ok ? 0 : 1);
     } catch (error) {
+      const failure = { ok: false, reason: error instanceof Error ? error.message : String(error) };
+      await writeFile(path.join(app.getPath("userData"), "paz-smoke-result.json"), JSON.stringify(failure), "utf8").catch(() => {});
       console.error("[PAZ_SMOKE_TEST] erro", error);
       app.exit(1);
     }
