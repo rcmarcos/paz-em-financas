@@ -55,3 +55,22 @@
 - [x] Exibir progresso percentual e prazo estimado para atingir a reserva.
 - [x] Incluir os dados da reserva no relatório PDF exportado.
 - [x] Validar a nova funcionalidade em desktop e móvel e salvar checkpoint.
+
+
+- [x] Criar shell desktop multiplataforma com carregamento local do portal.
+- [x] Garantir funcionamento offline do catálogo, assistente, calculadora, guias, mapa, favoritos, checklists e exportação.
+- [x] Configurar armazenamento local e permissões seguras para o app.
+- [x] Configurar empacotamento para macOS e Windows.
+- [x] Validar build e fluxos principais em modo offline.
+- [x] Entregar o código e os artefatos disponíveis do aplicativo.
+
+
+- [x] Ajustar o base do Vite para carregamento via file:// no Electron.
+- [x] Executar e validar o app empacotado em modo offline com fluxos principais.
+- [x] Salvar checkpoint final da versão desktop offline.
+- [x] Documentar que instaladores nativos de macOS e Windows precisam ser gerados em hosts apropriados.
+- [x] Corrigir o roteamento do Electron para abrir a Home quando o app usa file://.
+- [x] Corrigir o preload do Electron para carregar corretamente com sandbox habilitado.
+- [x] Validar o AppImage final em execução isolada com estado local limpo.
+- [x] Executar o AppImage com perfil Electron novo e limpar todas as chaves de localStorage antes do smoke test.
+- [x] Confirmar transições de primeiro uso: checklist 0→1, calculadora grava nova renda e mapa grava cenário atualizado.

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #FAEED8;
+        font-family: 'Poppins', sans-serif;
+        color: #2C3531;
+        position: relative;
+        overflow: hidden;
+      }
+      .content-wrapper {
+        padding-top: 80px;
+        padding-left: 120px;
+        padding-right: 120px;
+      }
+      h2 {
+        font-family: 'Lora', serif;
+        font-size: 64px;
+        font-weight: 900;
+        color: #1A3322;
+        margin-bottom: 50px;
+        line-height: 1.1;
+      }
+      .grid-layout {
+        display: grid;
+        grid-template-columns: 1fr 2px 1fr;
+        gap: 60px;
+        align-items: start;
+      }
+      .vertical-divider {
+        background-color: #D96459;
+        height: 420px;
+        opacity: 0.4;
+      }
+      .column h3 {
+        font-family: 'Lora', serif;
+        font-size: 32px;
+        color: #1A3322;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .list-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 24px;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      .bullet-square {
+        width: 10px;
+        height: 10px;
+        background-color: #D96459;
+        display: inline-block;
+        margin-right: 15px;
+        margin-top: 8px;
+        flex-shrink: 0;
+      }
+      .highlight-text {
+        font-weight: 600;
+        color: #1A3322;
+      }
+      .strategy-box {
+        background-color: rgba(26, 51, 34, 0.05);
+        padding: 20px;
+        border-left: 4px solid #1A3322;
+        margin-top: 10px;
+      }
+      .strategy-box strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #1A3322;
+      }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="content-wrapper">
+            <h2>Negociação de Dívidas sem Culpa</h2>
+            <div class="grid-layout">
+                <div class="column">
+                    <h3><i class="fas fa-brain"></i> Princípios Mentais</h3>
+                    <div class="list-item">
+                        <span class="bullet-square"></span>
+                        <span><span class="highlight-text">Separar a Pessoa da Dívida:</span> Encare o processo como uma negociação comercial fria, não como um fracasso moral.</span>
+                    </div>
+                    <div class="list-item">
+                        <span class="bullet-square"></span>
+                        <span><span class="highlight-text">Combater a Aversão:</span> O primeiro ato de coragem é mapear os valores reais. A clareza elimina o medo paralisante.</span>
+                    </div>
+                </div>
+
+                <div class="vertical-divider"></div>
+
+                <div class="column">
+                    <h3><i class="fas fa-chess"></i> Estratégias Práticas</h3>
+                    <div class="list-item">
+                        <span class="bullet-square"></span>
+                        <span>Escolha seu caminho conforme sua energia mental atual:</span>
+                    </div>
+                    <div class="strategy-box">
+                        <strong>Método Bola de Neve (Psicológico)</strong>
+                        Pague a menor dívida primeiro para obter vitórias rápidas e liberar dopamina.
+                    </div>
+                    <div class="strategy-box">
+                        <strong>Método Avalanche (Matemático)</strong>
+                        Pague a dívida com maior juro primeiro para economizar dinheiro no longo prazo.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

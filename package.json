@@ -2,6 +2,7 @@
   "name": "portal-financas-pessoais",
   "version": "1.0.0",
   "type": "module",
+  "main": "desktop/main.mjs",
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
@@ -10,7 +11,10 @@
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
     "test": "vitest run",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "desktop:dev": "concurrently -k \"vite --host\" \"wait-on http://127.0.0.1:3000 && cross-env PAZ_DEV_SERVER_URL=http://127.0.0.1:3000 electron .\"",
+    "desktop:build": "cross-env DESKTOP_BUILD=true pnpm build",
+    "desktop:package": "pnpm desktop:build && electron-builder --config desktop/electron-builder.yml"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -78,6 +82,10 @@
     "@vitejs/plugin-react": "^5.0.4",
     "add": "^2.0.6",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^10.0.4",
+    "cross-env": "^10.1.0",
+    "electron": "^43.4.0",
+    "electron-builder": "^26.15.3",
     "esbuild": "^0.25.0",
     "pnpm": "^10.15.1",
     "postcss": "^8.4.47",
@@ -88,7 +96,8 @@
     "typescript": "5.6.3",
     "vite": "^7.1.7",
     "vite-plugin-manus-runtime": "^0.0.58",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.4",
+    "wait-on": "^9.1.0"
   },
   "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af",
   "pnpm": {

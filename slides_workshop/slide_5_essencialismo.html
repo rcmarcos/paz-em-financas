@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #FAEED8;
+        font-family: 'Poppins', sans-serif;
+        color: #2C3531;
+        position: relative;
+        overflow: hidden;
+      }
+      .content-wrapper {
+        padding-top: 80px;
+        padding-left: 120px;
+        padding-right: 120px;
+      }
+      h2 {
+        font-family: 'Lora', serif;
+        font-size: 60px;
+        color: #1A3322;
+        margin-bottom: 40px;
+        font-weight: 900;
+      }
+      .grid-layout {
+        display: grid;
+        grid-template-columns: 1fr 2px 1fr;
+        gap: 60px;
+      }
+      .vertical-divider {
+        background-color: #D96459;
+        height: 400px;
+        margin-top: 10px;
+      }
+      .column h3 {
+        font-family: 'Lora', serif;
+        font-size: 32px;
+        color: #1A3322;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .column p {
+        font-size: 20px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+      .highlight-box {
+        background-color: rgba(26, 51, 34, 0.05);
+        padding: 20px;
+        border-top: 3px solid #1A3322;
+      }
+      .highlight-box strong {
+        display: block;
+        margin-bottom: 8px;
+        color: #1A3322;
+      }
+      .chart-area {
+        margin-top: 40px;
+        height: 180px;
+      }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="content-wrapper">
+            <h2>Essencialismo e Minimalismo</h2>
+            <div class="grid-layout">
+                <div class="column">
+                    <h3><i class="fas fa-bullseye"></i> Essencialismo</h3>
+                    <p>Não se trata de fazer mais em menos tempo, mas de fazer apenas o que é vital.</p>
+                    <div class="highlight-box">
+                        <strong>Foco no Vital:</strong>
+                        <p>Substitua 50 categorias de gastos por 3 grandes blocos: Essencial, Futuro e Escolhas.</p>
+                    </div>
+                </div>
+                <div class="vertical-divider"></div>
+                <div class="column">
+                    <h3><i class="fas fa-leaf"></i> Minimalismo Prático</h3>
+                    <p>Eliminar o excesso para dar espaço ao que traz significado real.</p>
+                    <div class="highlight-box">
+                        <strong>Custo Real:</strong>
+                        <p>Meça o preço de cada compra em "horas de vida" dedicadas ao trabalho para pagá-la.</p>
+                    </div>
+                    <div class="chart-area">
+                        <canvas id="focusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const ctx = document.getElementById('focusChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Esforço Disperso', 'Esforço Focado'],
+                datasets: [{
+                    label: 'Impacto nos Objetivos',
+                    data: [30, 95],
+                    backgroundColor: ['#D96459', '#1A3322'],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: { display: false },
+                        grid: { display: false }
+                    },
+                    x: {
+                        ticks: {
+                            font: { family: 'Poppins', size: 14, weight: '600' },
+                            color: '#1A3322'
+                        },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

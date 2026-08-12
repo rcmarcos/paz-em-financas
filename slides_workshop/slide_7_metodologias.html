@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #FAEED8;
+        font-family: 'Poppins', sans-serif;
+        color: #2C3531;
+        position: relative;
+        overflow: hidden;
+      }
+      .content-wrapper {
+        padding-top: 80px;
+        padding-left: 120px;
+        padding-right: 120px;
+      }
+      h2 {
+        font-family: 'Lora', serif;
+        font-size: 64px;
+        color: #1A3322;
+        margin-bottom: 40px;
+        font-weight: 900;
+      }
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      .comparison-table th {
+        text-align: left;
+        font-family: 'Lora', serif;
+        font-size: 24px;
+        color: #1A3322;
+        padding: 20px;
+        border-bottom: 2px solid #D96459;
+      }
+      .comparison-table td {
+        padding: 20px;
+        font-size: 18px;
+        line-height: 1.5;
+        border-bottom: 1px solid rgba(26, 51, 34, 0.1);
+        vertical-align: top;
+      }
+      .method-name {
+        font-weight: 600;
+        color: #1A3322;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .square-bullet {
+        width: 8px;
+        height: 8px;
+        background-color: #D96459;
+        display: inline-block;
+      }
+      .tag {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: rgba(217, 100, 89, 0.1);
+        padding: 4px 8px;
+        color: #D96459;
+        font-weight: 600;
+      }
+      .vertical-divider {
+        width: 2px;
+        background-color: #1A3322;
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        top: 0;
+        opacity: 0.05;
+      }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="content-wrapper">
+            <h2>Metodologias e Ferramentas</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Abordagem</th>
+                        <th>Conceito Chave</th>
+                        <th>Perfil Ideal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="method-name"><span class="square-bullet"></span> Regra 50/30/20</div>
+                            <span class="tag">Simplicidade</span>
+                        </td>
+                        <td>Divisão da renda em Necessidades (50%), Desejos (30%) e Futuro (20%).</td>
+                        <td>Iniciantes que buscam clareza sem excesso de detalhes.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="method-name"><span class="square-bullet"></span> Orçamento Base Zero</div>
+                            <span class="tag">Precisão</span>
+                        </td>
+                        <td>Cada real recebe uma função antes do mês começar. Saldo final deve ser zero.</td>
+                        <td>Quem precisa de controle rigoroso ou sair de dívidas.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="method-name"><span class="square-bullet"></span> Conscious Spending</div>
+                            <span class="tag">Liberdade</span>
+                        </td>
+                        <td>Foco em Custos Fixos e Investimentos, liberando o resto para "Culpa Zero".</td>
+                        <td>Pessoas que já poupam e querem gastar com o que amam.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

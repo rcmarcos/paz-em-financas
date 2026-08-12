@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background-color: #FAEED8;
+        font-family: 'Poppins', sans-serif;
+        color: #2C3531;
+        position: relative;
+        overflow: hidden;
+      }
+      .content-wrapper {
+        padding-top: 80px;
+        padding-left: 120px;
+        padding-right: 120px;
+      }
+      h2 {
+        font-family: 'Lora', serif;
+        font-size: 64px;
+        font-weight: 900;
+        color: #1A3322;
+        margin-bottom: 60px;
+        line-height: 1.1;
+      }
+      .vieses-grid {
+        display: grid;
+        grid-template-columns: 1fr 2px 1fr 2px 1fr;
+        gap: 40px;
+        align-items: stretch;
+      }
+      .divider {
+        background-color: #D96459;
+        width: 2px;
+        height: 380px;
+      }
+      .vies-col h3 {
+        font-family: 'Lora', serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: #1A3322;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .vies-col p {
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+      .antidoto-box {
+        background-color: rgba(26, 51, 34, 0.05);
+        padding-top: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .antidoto-box strong {
+        display: block;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #D96459;
+        margin-bottom: 8px;
+      }
+      .bullet-list {
+        list-style: none;
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 12px;
+        font-size: 16px;
+      }
+      .bullet-list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 6px;
+        width: 8px;
+        height: 8px;
+        background-color: #1A3322;
+      }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="content-wrapper">
+            <h2>Vieses que Sabotam o Orçamento</h2>
+            <div class="vieses-grid">
+                <div class="vies-col">
+                    <h3><i class="fas fa-hourglass-half"></i> Viés do Presente</h3>
+                    <p>A tendência de priorizar o prazer imediato em detrimento de benefícios futuros de longo prazo.</p>
+                    <div class="antidoto-box">
+                        <strong>Antídoto Prático</strong>
+                        <ul class="bullet-list">
+                            <li>Automatizar investimentos</li>
+                            <li>Regra das 48 horas para compras</li>
+                            <li>Visualizar o "Eu do Futuro"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="vies-col">
+                    <h3><i class="fas fa-wallet"></i> Contabilidade Mental</h3>
+                    <p>Tratar o dinheiro de forma diferente dependendo da sua origem (ex: bônus vs. salário).</p>
+                    <div class="antidoto-box">
+                        <strong>Antídoto Prático</strong>
+                        <ul class="bullet-list">
+                            <li>Unificar a visão do saldo</li>
+                            <li>Destinar extras antes de receber</li>
+                            <li>Evitar "dinheiro carimbado"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="vies-col">
+                    <h3><i class="fas fa-shield-alt"></i> Aversão à Perda</h3>
+                    <p>A dor de perder R$ 100 é sentida com o dobro da intensidade do prazer de ganhar R$ 100.</p>
+                    <div class="antidoto-box">
+                        <strong>Antídoto Prático</strong>
+                        <ul class="bullet-list">
+                            <li>Focar na proteção do essencial</li>
+                            <li>Revisar custos irrecuperáveis</li>
+                            <li>Mudar o foco para o ganho real</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

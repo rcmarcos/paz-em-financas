@@ -1,13 +1,14 @@
+import { useCallback, useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Router as WouterRouter, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 
 
-function Router() {
+function Routes() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
@@ -15,6 +16,35 @@ function Router() {
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
+  );
+}
+
+function useDesktopHashLocation(): [string, (path: string) => void] {
+  const readHash = () => {
+    const value = window.location.hash.replace(/^#/, "");
+    return value || "/";
+  };
+  const [location, setLocation] = useState(readHash);
+  useEffect(() => {
+    const onHashChange = () => setLocation(readHash());
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+  const navigate = useCallback((path: string) => {
+    window.location.hash = path || "/";
+    setLocation(path || "/");
+  }, []);
+  return [location, navigate];
+}
+
+function Router() {
+  const isDesktopFileProtocol = typeof window !== "undefined" && window.location.protocol === "file:";
+  return isDesktopFileProtocol ? (
+    <WouterRouter hook={useDesktopHashLocation}>
+      <Routes />
+    </WouterRouter>
+  ) : (
+    <Routes />
   );
 }
 

@@ -1,0 +1,111 @@
+{
+  "project_info": {
+    "title": "Capa: Paz em Finanças",
+    "created": 1786537501.659,
+    "last_updated": 1786537711.503,
+    "total_slides": 9
+  },
+  "slides": [
+    {
+      "id": "slide_1_capa",
+      "state": "edited",
+      "pageNum": 1
+    },
+    {
+      "id": "slide_2_problema",
+      "state": "edited",
+      "pageNum": 2
+    },
+    {
+      "id": "slide_3_filosofia",
+      "state": "edited",
+      "pageNum": 3
+    },
+    {
+      "id": "slide_4_vieses",
+      "state": "edited",
+      "pageNum": 4
+    },
+    {
+      "id": "slide_5_essencialismo",
+      "state": "edited",
+      "pageNum": 5
+    },
+    {
+      "id": "slide_6_mapa_paz",
+      "state": "edited",
+      "pageNum": 6
+    },
+    {
+      "id": "slide_7_metodologias",
+      "state": "edited",
+      "pageNum": 7
+    },
+    {
+      "id": "slide_8_negociacao",
+      "state": "edited",
+      "pageNum": 8
+    },
+    {
+      "id": "slide_9_conclusao",
+      "state": "edited",
+      "pageNum": 9
+    }
+  ],
+  "outline": [
+    {
+      "id": "slide_1_capa",
+      "title": "Capa: Paz em Finanças",
+      "summary": "Título principal e subtítulo com a filosofia estoica e finanças comportamentais.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "slide_2_problema",
+      "title": "O Mito da Racionalidade",
+      "summary": "Explicação de por que planilhas falham ao ignorar a mente humana e a fadiga de decisão.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "slide_3_filosofia",
+      "title": "Ajustar a Vela, Aceitar o Vento",
+      "summary": "Metáfora estoica sobre o que controlamos (hábitos) e o que não controlamos (economia).",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "slide_4_vieses",
+      "title": "Vieses que Sabotam o Orçamento",
+      "summary": "Viés do presente, contabilidade mental e aversão à perda.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "slide_5_essencialismo",
+      "title": "Essencialismo e Minimalismo Prático",
+      "summary": "Focar em blocos essenciais e medir o custo real em horas de vida.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "slide_6_mapa_paz",
+      "title": "O Mapa de Paz Financeira",
+      "summary": "Conexão entre valores, metas trimestrais e alinhamento de vida.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "slide_7_metodologias",
+      "title": "Metodologias e Ferramentas",
+      "summary": "Visão geral da Regra 50/30/20, Orçamento Base Zero e Conscious Spending Plan.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "slide_8_negociacao",
+      "title": "Negociação de Dívidas sem Culpa",
+      "summary": "Abordagem comportamental para sair do endividamento com autoconfiança.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "slide_9_conclusao",
+      "title": "Conclusão e Próximos Passos",
+      "summary": "Chamada para ação, acesso ao portal e mensagem final de clareza.",
+      "image_plan": "Use a suitable image if needed"
+    }
+  ]
+}

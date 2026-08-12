@@ -1,0 +1,30 @@
+appId: br.pazemfinancas.portal
+productName: Paz em Finanças
+artifactName: ${productName}-${version}-${os}-${arch}.${ext}
+directories:
+  output: release
+  buildResources: desktop
+files:
+  - dist/public/**/*
+  - desktop/main.mjs
+  - desktop/preload.cjs
+  - package.json
+asar: true
+npmRebuild: false
+mac:
+  category: public.app-category.finance
+  target:
+    - dmg
+    - zip
+win:
+  target:
+    - nsis
+    - portable
+  artifactName: ${productName}-${version}-windows-${arch}.${ext}
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+linux:
+  category: Office
+  target:
+    - AppImage
