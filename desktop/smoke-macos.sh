@@ -16,13 +16,14 @@ run_smoke() {
 
   rm -rf "$user_data"
   mkdir -p "$user_data"
+  xattr -dr com.apple.quarantine "$app_path" 2>/dev/null || true
   executable="$(find "$app_path/Contents/MacOS" -maxdepth 1 -type f -perm -111 -print -quit)"
   if [[ -z "$executable" ]]; then
     echo "Nenhum executável encontrado em $app_path/Contents/MacOS" >&2
     return 1
   fi
 
-  PAZ_SMOKE_TEST=true "$executable" --user-data-dir="$user_data" --no-sandbox --disable-gpu >"$log_path" 2>&1 &
+  PAZ_SMOKE_TEST=true "$executable" --user-data-dir="$user_data" --no-sandbox --disable-gpu --headless >"$log_path" 2>&1 &
   local pid=$!
   for _ in $(seq 1 90); do
     [[ -f "$result_path" ]] && break
@@ -58,13 +59,19 @@ hdiutil attach "$DMG_PATH" -nobrowse -readonly -mountpoint "$MOUNT_PATH" >/dev/n
 trap 'hdiutil detach "$MOUNT_PATH" >/dev/null 2>&1 || true' EXIT
 DMG_APP="$(find "$MOUNT_PATH" -maxdepth 2 -type d -name '*.app' -print -quit)"
 [[ -n "$DMG_APP" ]] || { echo "Bundle .app não encontrado no DMG" >&2; exit 1; }
-run_smoke "$DMG_APP" "dmg"
+DMG_APP_COPY="$SMOKE_ROOT/dmg-app/Paz em Finanças.app"
+mkdir -p "$(dirname "$DMG_APP_COPY")"
+ditto "$DMG_APP" "$DMG_APP_COPY"
+run_smoke "$DMG_APP_COPY" "dmg"
 
 ZIP_DIR="$SMOKE_ROOT/zip-extracted"
 mkdir -p "$ZIP_DIR"
 ditto -x -k "$ZIP_PATH" "$ZIP_DIR"
 ZIP_APP="$(find "$ZIP_DIR" -maxdepth 3 -type d -name '*.app' -print -quit)"
 [[ -n "$ZIP_APP" ]] || { echo "Bundle .app não encontrado no ZIP" >&2; exit 1; }
-run_smoke "$ZIP_APP" "zip"
+ZIP_APP_COPY="$SMOKE_ROOT/zip-app/Paz em Finanças.app"
+mkdir -p "$(dirname "$ZIP_APP_COPY")"
+ditto "$ZIP_APP" "$ZIP_APP_COPY"
+run_smoke "$ZIP_APP_COPY" "zip"
 
 echo "macOS DMG e ZIP validados com smoke test offline."
