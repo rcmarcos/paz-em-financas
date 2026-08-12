@@ -35,3 +35,11 @@
 - [x] Implementar a seção visual de guias no frontend com abas e passo a passo.
 - [x] Validar a leitura e a responsividade da nova seção.
 - [x] Salvar o checkpoint final com os guias práticos incorporados.
+
+
+- [x] Implementar calculadora interativa de divisão de orçamento baseada na renda.
+- [x] Adicionar prévia visual das planilhas antes do download.
+- [x] Persistir checklists e metodologias favoritas usando localStorage.
+- [x] Criar e validar a habilidade reutilizável do processo com skill-creator.
+- [x] Validar testes, build e responsividade dos novos recursos.
+- [x] Salvar o checkpoint publicado da atualização.

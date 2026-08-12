@@ -1,20 +1,26 @@
 /* Atlas Editorial: fichas com marcadores terracota, selos de método e leitura comparável. */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
-import { ArrowDownToLine, ArrowUpRight, Check, CheckCircle2, ChevronDown, Clock3, ExternalLink, Gauge, HelpCircle, Laptop, Plus, Sparkles, Tag, X } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight, Check, CheckCircle2, ChevronDown, Clock3, ExternalLink, Gauge, HelpCircle, Laptop, Plus, Sparkles, Star, Tag, X } from "lucide-react";
 import { entries, recommendEntries, type Entry } from "@/lib/catalog";
 import { kindIcon } from "@/lib/catalog";
 import { practicalGuides, getPracticalGuide } from "@/lib/guides";
+
+const generateGuideCsv = (guide: ReturnType<typeof getPracticalGuide>) => {
+  const headerLine = guide.spreadsheetHeaders.join(",");
+  const rowLines = guide.spreadsheetRows.map(row => row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(","));
+  return [headerLine, ...rowLines].join("\n");
+};
 
 export function Metric({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return <div className="metric-row"><Icon aria-hidden="true" size={15} strokeWidth={1.8} /><span>{label}</span><strong>{value}</strong></div>;
 }
 
-export function EntryCard({ entry, selected, onCompare, onOpen }: { entry: Entry; selected: boolean; onCompare: () => void; onOpen: () => void }) {
+export function EntryCard({ entry, selected, isFavorite = false, onFavorite, onCompare, onOpen }: { entry: Entry; selected: boolean; isFavorite?: boolean; onFavorite?: () => void; onCompare: () => void; onOpen: () => void }) {
   const Icon = entry.icon;
   const KindIcon = kindIcon(entry.kind);
   return <article className={`entry-card ${selected ? "entry-card-selected" : ""}`}>
-    <div className="entry-card-topline"><span className={`kind-badge ${entry.kind === "Plataforma" ? "kind-platform" : "kind-method"}`}><KindIcon size={12} />{entry.kind}</span><span className="region-label">{entry.region}</span></div>
+    <div className="entry-card-topline"><span className={`kind-badge ${entry.kind === "Plataforma" ? "kind-platform" : "kind-method"}`}><KindIcon size={12} />{entry.kind}</span><div className="entry-card-topline-right"><span className="region-label">{entry.region}</span>{onFavorite && <button type="button" className={`favorite-button ${isFavorite ? "is-favorite" : ""}`} onClick={onFavorite} aria-label={isFavorite ? `Remover ${entry.name} dos favoritos` : `Salvar ${entry.name} nos favoritos`} aria-pressed={isFavorite}><Star size={15} fill={isFavorite ? "currentColor" : "none"} /></button>}</div></div>
     <div className="entry-heading"><div className="icon-tile"><Icon size={23} strokeWidth={1.7} /></div><div><p className="eyebrow">{entry.eyebrow}</p><h3>{entry.name}</h3></div></div>
     <p className="entry-summary">{entry.summary}</p>
     <div className="tag-row">{entry.tags.map((tag) => <span key={tag} className="tag"><Tag size={11} />{tag}</span>)}</div>
@@ -86,17 +92,25 @@ export function AssistantPanel({ onClose, onSelect }: { onClose: () => void; onS
 
 export function PracticalGuidesSection() {
   const [activeGuideId, setActiveGuideId] = useState("503020");
-  const [completedSteps, setCompletedSteps] = useState<Record<string, boolean>>({});
+  const [completedSteps, setCompletedSteps] = useState<Record<string, boolean>>(() => {
+    if (typeof window === "undefined") return {};
+    try { return JSON.parse(window.localStorage.getItem("atlas-checklists") || "{}") as Record<string, boolean>; } catch { return {}; }
+  });
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   const currentGuide = getPracticalGuide(activeGuideId);
+  const previewRows = [currentGuide.spreadsheetHeaders, ...currentGuide.spreadsheetRows];
+
+  useEffect(() => { window.localStorage.setItem("atlas-checklists", JSON.stringify(completedSteps)); }, [completedSteps]);
 
   const toggleStep = (stepKey: string) => {
     setCompletedSteps(prev => ({ ...prev, [stepKey]: !prev[stepKey] }));
   };
 
   const handleDownloadCsv = () => {
-    const blob = new Blob([currentGuide.spreadsheetCsv], { type: "text/csv;charset=utf-8;" });
+    const csvContent = generateGuideCsv(currentGuide);
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
@@ -123,7 +137,7 @@ export function PracticalGuidesSection() {
               key={guide.id}
               type="button"
               className={`guide-tab-button ${guide.id === activeGuideId ? "active" : ""}`}
-              onClick={() => { setActiveGuideId(guide.id); setOpenFaq(null); }}
+              onClick={() => { setActiveGuideId(guide.id); setOpenFaq(null); setPreviewOpen(false); }}
             >
               <span>{guide.title.replace("Como implementar a ", "").replace("Como aplicar o ", "").replace("Como dominar o ", "").replace("Como estruturar seu ", "").replace("Como planejar ", "").replace("Como estruturar um ", "")}</span>
               <span className="guide-tab-meta">{guide.difficulty} · {guide.timeframe}</span>
@@ -143,11 +157,11 @@ export function PracticalGuidesSection() {
                 <Clock3 size={15} />
                 <span>{currentGuide.timeframe}</span>
               </div>
-              <button type="button" className="download-sheet-button" onClick={handleDownloadCsv}>
-                <ArrowDownToLine size={15} /> Baixar planilha ({currentGuide.spreadsheetTitle})
-              </button>
+              <div className="guide-sheet-actions"><button type="button" className="preview-sheet-button" onClick={() => setPreviewOpen((open) => !open)} aria-expanded={previewOpen}><HelpCircle size={15} /> {previewOpen ? "Fechar prévia" : "Ver prévia"}</button><button type="button" className="download-sheet-button" onClick={handleDownloadCsv}><ArrowDownToLine size={15} /> Baixar planilha</button></div>
             </div>
           </div>
+
+          {previewOpen && <div className="sheet-preview-panel"><div className="sheet-preview-heading"><div><span className="section-kicker">Prévia do template</span><h4>{currentGuide.spreadsheetTitle}</h4></div><span className="sheet-preview-note">Primeiras linhas</span></div><div className="sheet-preview-table-wrap"><table className="sheet-preview-table"><thead><tr>{(previewRows[0] || []).map((header, index) => <th key={index}>{header}</th>)}</tr></thead><tbody>{previewRows.slice(1, 6).map((row, rowIndex) => <tr key={rowIndex}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table></div><p className="sheet-preview-footnote">O arquivo completo será baixado em CSV e pode ser aberto no Excel, Google Planilhas ou LibreOffice.</p></div>}
 
           <div className="guide-steps-list">
             <p className="guide-checklist-intro">Marque os passos conforme avançar na sua rotina:</p>
