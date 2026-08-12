@@ -29,3 +29,31 @@
 .assistant-step{padding:34px 0 12px}.assistant-step h3,.assistant-results h3{margin:0 0 23px;color:#1b4a40;font-family:"Fraunces",serif;font-size:27px;font-weight:500;letter-spacing:-.045em}.assistant-options{display:grid;gap:10px}.assistant-option{display:flex;align-items:center;justify-content:space-between;border:1px solid #d8dfd3;background:#f5f7f0;color:#52655a;padding:15px 16px;text-align:left;font-size:13px;transition:background 160ms ease-out,border-color 160ms ease-out,color 160ms ease-out,transform 160ms ease-out}.assistant-option:after{content:"→";color:#c45a3b;font-size:18px}.assistant-option:hover,.assistant-option.selected{border-color:#9db99d;background:#e8efe6;color:#1b4a40;transform:translateX(3px)}.assistant-results{padding-top:29px}.assistant-results .entry-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.assistant-results .entry-card{min-height:274px;padding:15px 14px 13px}.assistant-results .entry-heading{margin:15px 0 10px}.assistant-results .entry-heading h3{font-size:19px}.assistant-results .entry-summary{font-size:11px}.assistant-results .tag-row{margin:11px 0 12px}.assistant-results .metrics-grid{gap:6px}.assistant-results .metric-row{font-size:9px}.assistant-results .metric-row strong{font-size:10px}.assistant-results .card-actions{align-items:flex-start;flex-direction:column;gap:9px}.assistant-results .compare-button{display:none}.assistant-results .text-button{font-size:10px}.assistant-results>p{color:#69746c;font-size:13px;line-height:1.6}
 @media(max-width:900px){.assistant-teaser{width:min(100% - 32px,680px)}.assistant-results .entry-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.assistant-teaser{align-items:flex-start;flex-direction:column;gap:22px;width:min(100% - 32px,680px);padding:27px 24px}.assistant-teaser .primary-button{width:100%}.assistant-results .entry-grid{grid-template-columns:1fr}.comparison-panel{padding:25px 18px}.assistant-step h3,.assistant-results h3{font-size:24px}.metrics-grid{grid-template-columns:repeat(3,1fr);gap:5px}.metric-row{font-size:9px;gap:3px}.metric-row strong{font-size:10px}}
+
+
+/* Seção de Guias Práticos */
+.guides-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:30px;align-items:start;margin-top:35px}
+.guides-tabs{display:grid;gap:8px;position:sticky;top:22px}
+.guide-tab-button{display:flex;align-items:center;justify-content:space-between;border:1px solid #d8dfd3;background:#f5f7f0;color:#52655a;padding:12px 14px;text-align:left;font-size:12px;font-weight:600;transition:background 160ms ease-out,border-color 160ms ease-out,color 160ms ease-out}
+.guide-tab-button:hover{border-color:#9db99d;background:#eef4eb;color:#1b4a40}
+.guide-tab-button.active{border-color:#1b4a40;background:#1b4a40;color:#fffaf2}
+.guide-tab-meta{font-size:10px;opacity:.8}
+.guide-card-panel{background:#fffdf8;border:1px solid #e2ddd1;padding:32px;box-shadow:0 12px 28px rgba(53,62,51,.06)}
+.guide-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding-bottom:24px;border-bottom:1px solid #ede8dd}
+.guide-difficulty-badge{display:inline-block;margin-bottom:8px;padding:4px 8px;background:#e5eee2;color:#1b4a40;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.guide-card-header h3{margin:0 0 8px;color:#1b4a40;font-family:"Fraunces",serif;font-size:28px;font-weight:500;letter-spacing:-.04em}
+.guide-card-header p{margin:0;color:#657169;font-size:14px;line-height:1.6}
+.guide-timeframe-box{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#f5f2e9;border:1px solid #e4dec8;color:#7a6538;font-size:11px;font-weight:700;white-space:nowrap}
+.guide-steps-list{display:grid;gap:22px;margin:28px 0}
+.guide-step-item{display:grid;grid-template-columns:36px minmax(0,1fr);gap:16px;align-items:flex-start}
+.guide-step-num{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#e8efe6;color:#1b4a40;font-family:"Fraunces",serif;font-size:16px;font-weight:600}
+.guide-step-body h4{margin:0 0 6px;color:#1b4a40;font-size:15px;font-weight:700}
+.guide-step-body p{margin:0 0 10px;color:#657169;font-size:13px;line-height:1.6}
+.guide-step-action{padding:10px 14px;background:#f8f5ee;border-left:3px solid #c45a3b;color:#4f5d55;font-size:12px;line-height:1.5}
+.guide-step-action strong{color:#1b4a40}
+.guide-card-footer{display:flex;align-items:center;gap:10px;padding-top:20px;border-top:1px solid #ede8dd;color:#69746c;font-size:12px}
+.guide-card-footer svg{flex:0 0 auto;color:#c45a3b}
+.guide-card-footer strong{color:#1b4a40}
+
+@media(max-width:900px){.guides-layout{grid-template-columns:1fr}.guides-tabs{position:relative;top:auto;grid-template-columns:repeat(2,1fr)}.guide-card-panel{padding:22px}}
+@media(max-width:640px){.guides-tabs{grid-template-columns:1fr}}

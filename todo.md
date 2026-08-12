@@ -29,3 +29,9 @@
 - Buckets — https://www.budgetwithbuckets.com/
 - Lunch Money — https://lunchmoney.app/
 - Actual Budget — https://actualbudget.org/
+
+
+- [x] Criar o módulo de dados para os guias práticos de cada metodologia.
+- [x] Implementar a seção visual de guias no frontend com abas e passo a passo.
+- [x] Validar a leitura e a responsividade da nova seção.
+- [x] Salvar o checkpoint final com os guias práticos incorporados.

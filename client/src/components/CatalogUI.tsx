@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { ArrowUpRight, Check, CheckCircle2, Clock3, ExternalLink, Gauge, Laptop, Plus, Sparkles, Tag, X } from "lucide-react";
 import { entries, recommendEntries, type Entry } from "@/lib/catalog";
 import { kindIcon } from "@/lib/catalog";
+import { practicalGuides, getPracticalGuide } from "@/lib/guides";
 
 export function Metric({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return <div className="metric-row"><Icon aria-hidden="true" size={15} strokeWidth={1.8} /><span>{label}</span><strong>{value}</strong></div>;
@@ -81,6 +82,73 @@ export function AssistantPanel({ onClose, onSelect }: { onClose: () => void; onS
       <button type="button" className="outline-button mt-6" onClick={() => setStep(1)}>Refazer escolhas</button>
     </div>}
   </aside></div>;
+}
+
+export function PracticalGuidesSection() {
+  const [activeGuideId, setActiveGuideId] = useState("503020");
+  const currentGuide = getPracticalGuide(activeGuideId);
+
+  return (
+    <div className="guides-section" id="guias-praticos">
+      <div className="catalog-heading">
+        <div>
+          <p className="overline"><span className="overline-dot" /> Passo a passo diário</p>
+          <h2>Como colocar em prática.</h2>
+        </div>
+        <p className="catalog-description">Escolha uma metodologia para ver o passo a passo detalhado de implementação na sua rotina, com orientações diretas e sem complicação.</p>
+      </div>
+
+      <div className="guides-layout">
+        <div className="guides-tabs">
+          {practicalGuides.map(guide => (
+            <button
+              key={guide.id}
+              type="button"
+              className={`guide-tab-button ${guide.id === activeGuideId ? "active" : ""}`}
+              onClick={() => setActiveGuideId(guide.id)}
+            >
+              <span>{guide.title.replace("Como implementar a ", "").replace("Como aplicar o ", "").replace("Como dominar o ", "").replace("Como estruturar seu ", "").replace("Como planejar ", "")}</span>
+              <span className="guide-tab-meta">{guide.difficulty} · {guide.timeframe}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="guide-card-panel">
+          <div className="guide-card-header">
+            <div>
+              <span className="guide-difficulty-badge">Esforço: {currentGuide.difficulty}</span>
+              <h3>{currentGuide.title}</h3>
+              <p>{currentGuide.subtitle}</p>
+            </div>
+            <div className="guide-timeframe-box">
+              <Clock3 size={16} />
+              <span>{currentGuide.timeframe}</span>
+            </div>
+          </div>
+
+          <div className="guide-steps-list">
+            {currentGuide.steps.map((step, index) => (
+              <div key={index} className="guide-step-item">
+                <div className="guide-step-num">{index + 1}</div>
+                <div className="guide-step-body">
+                  <h4>{step.title}</h4>
+                  <p>{step.description}</p>
+                  <div className="guide-step-action">
+                    <strong>Ação prática:</strong> {step.action}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="guide-card-footer">
+            <Sparkles size={16} />
+            <span><strong>Dica editorial:</strong> {currentGuide.toolTip}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export function ComparisonPanel({ selected, onClose, onRemove }: { selected: Entry[]; onClose: () => void; onRemove: (id: string) => void }) {
