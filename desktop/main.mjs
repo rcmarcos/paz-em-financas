@@ -22,7 +22,9 @@ function createWindow() {
     },
   });
 
-  window.once("ready-to-show", () => window.show());
+  window.once("ready-to-show", () => {
+    if (process.env.PAZ_SMOKE_TEST !== "true") window.show();
+  });
 
   window.webContents.setWindowOpenHandler(({ url }) => {
     if (/^https?:\/\//i.test(url)) {
