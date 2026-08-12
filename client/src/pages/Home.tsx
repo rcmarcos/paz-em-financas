@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, Compass, Download, ExternalLink, Filter, Menu, Search, SlidersHorizontal, Sparkles, X } from "lucide-react";
 import BudgetCalculator from "@/components/BudgetCalculator";
 import { AssistantPanel, ComparisonPanel, DetailDialog, EntryCard, PracticalGuidesSection } from "@/components/CatalogUI";
+import { BehaviorSection, PeaceMapSection } from "@/components/BehaviorAndMapUI";
 import { categoryLabels, entries, getAutomationLevel, getEffortLevel, type Entry, type EntryKind } from "@/lib/catalog";
 import { exportPersonalReport } from "@/lib/pdfExport";
 
@@ -49,6 +50,10 @@ export default function Home() {
       <section className="hero-section"><div className="hero-copy"><p className="overline"><span className="overline-dot" /> Acervo em português · edição 01</p><h1>Encontre um método que <em>caiba</em> na sua vida.</h1><p className="hero-lead">Uma curadoria de metodologias, modelos e ferramentas para organizar o dinheiro com mais clareza — sem jargão e sem promessa fácil.</p><div className="hero-actions"><button type="button" className="primary-button" onClick={scrollToCatalog}>Explorar o acervo <ArrowRight size={17} /></button><button type="button" className="assistant-trigger" onClick={() => setAssistantOpen(true)}><Sparkles size={16} /> Encontrar meu método</button><button type="button" className="assistant-trigger" onClick={exportPersonalReport}><Download size={16} /> Exportar meu plano</button><a href="#como-funciona" className="quiet-link">Entenda a lógica <ChevronDown size={15} /></a></div><div className="hero-note"><Compass size={17} /><span><strong>{entries.length} fichas comparáveis</strong> entre métodos e plataformas. Comece por uma pergunta, não por uma planilha.</span></div></div><div className="hero-art" aria-hidden="true"><div className="hero-image" /><div className="hero-stamp"><img src="/manus-storage/atlas-financas-stamp_fa9a5e4d.png" alt="" /><span>mapa<br />de escolhas</span></div><div className="hero-caption">01 / pesquisa aplicada</div></div></section>
 
       <section className="intro-strip" id="conceito"><div className="intro-label"><span className="section-number">01</span><span>O Conceito</span></div><div className="intro-text"><h2>Ajustar a vela, aceitar o vento.</h2><p>Inspirado na <strong>filosofia estoica</strong>, no minimalismo e no essencialismo, o <em>Paz em Finanças</em> parte de uma premissa simples: não controlamos o vento (mercado, imprevistos), mas controlamos a vela (orçamento, hábitos, decisões). O objetivo é a tranquilidade, não a acumulação vazia.</p></div><div className="intro-steps"><div><span>1</span><p>Controle o que depende de você</p></div><div><span>2</span><p>Elimine o supérfluo sem culpa</p></div><div><span>3</span><p>Decida no seu ritmo e clareza</p></div></div></section>
+
+      <BehaviorSection />
+
+      <PeaceMapSection />
 
       <section className="assistant-teaser" id="assistente"><div><p className="overline"><span className="overline-dot" /> Um ponto de partida guiado</p><h2>Não sabe por onde começar?</h2><p>Responda três perguntas rápidas sobre seu momento, objetivo e disponibilidade. O assistente cruza suas respostas com o acervo e sugere caminhos para investigar.</p></div><button type="button" className="primary-button" onClick={() => setAssistantOpen(true)}>Abrir assistente <Sparkles size={16} /></button></section>
 

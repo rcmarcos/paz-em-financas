@@ -2,6 +2,7 @@ import { jsPDF } from "jspdf";
 import { budgetMethodLabels, type BudgetMethod } from "@/lib/budget";
 import { entries } from "@/lib/catalog";
 import { practicalGuides } from "@/lib/guides";
+import { personalValues } from "@/lib/behaviorMap";
 
 type StoredCalculatorResult = {
   income: number;
@@ -36,7 +37,12 @@ export const exportPersonalReport = () => {
   const favoriteIds = readStorage<string[]>("atlas-favorites", []);
   const checklist = readStorage<Record<string, boolean>>("atlas-checklists", {});
   const calculator = readStorage<StoredCalculatorResult | null>("atlas-calculator-result", null);
+  const peaceValuesIds = readStorage<string[]>("atlas-peace-values", ["tranquility"]);
+  const peaceGoal = window.localStorage.getItem("atlas-peace-goal") || "Criar reserva de 6 meses e eliminar gastos impulsivos com delivery.";
+  
   const favoriteEntries = entries.filter(entry => favoriteIds.includes(entry.id));
+  const activeValues = personalValues.filter(v => peaceValuesIds.includes(v.id));
+
   const doc = new jsPDF({ unit: "pt", format: "a4" });
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -62,70 +68,77 @@ export const exportPersonalReport = () => {
   const heading = (text: string) => {
     ensureSpace(30);
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(15);
+    doc.setFontSize(14);
     doc.setTextColor(27, 74, 64);
     doc.text(text, 54, y);
-    y += 24;
+    y += 22;
   };
 
+  // Header banner
   doc.setFillColor(27, 74, 64);
-  doc.rect(0, 0, pageWidth, 22, "F");
+  doc.rect(0, 0, pageWidth, 6, "F");
+  
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
   doc.setTextColor(27, 74, 64);
-  doc.text("Guia Comparativo", 54, y);
+  doc.text("Paz em Finanças", 54, y);
   y += 20;
+
   doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
   doc.setTextColor(196, 90, 59);
-  doc.text("Meu plano de organização financeira", 54, y);
-  y += 24;
-  paragraph(`Relatório gerado em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "long" }).format(new Date())}. Os dados foram lidos apenas do navegador deste dispositivo.`, 9, [120, 132, 123]);
+  doc.text("Plano de Vida e Orçamento Alinhado", 54, y);
+  y += 22;
 
-  heading("Minha simulação de orçamento");
-  if (calculator) {
-    paragraph(`${budgetMethodLabels[calculator.method]} com renda líquida mensal de ${currency.format(calculator.income)}.`, 10, [82, 99, 89]);
-    calculator.allocations.forEach(allocation => paragraph(`${allocation.label}: ${allocation.percentage}% — ${currency.format(allocation.amount)}`, 10));
-  } else {
-    paragraph("Nenhuma simulação foi salva ainda. Visite a calculadora no portal para criar seu primeiro cenário.", 10);
+  paragraph(`Relatório gerado em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "long" }).format(new Date())}. Baseado na filosofia estoica, no essencialismo e nas finanças comportamentais.`, 9, [120, 132, 123]);
+  y += 6;
+
+  heading("Mapa de Paz Financeira & Valores");
+  paragraph(`Prioridade prática no trimestre: “${peaceGoal}”`, 10);
+  if (activeValues.length > 0) {
+    paragraph("Valores norteadores selecionados:", 10);
+    activeValues.forEach(val => paragraph(`• ${val.name}: ${val.description}`, 9));
   }
-  y += 5;
+  y += 6;
 
-  heading("Meta de reserva de emergência");
+  heading("Simulação de Orçamento");
+  if (calculator) {
+    paragraph(`Método: ${budgetMethodLabels[calculator.method]} | Renda Líquida: ${currency.format(calculator.income)}`, 10);
+    calculator.allocations.forEach(allocation => paragraph(`• ${allocation.label}: ${allocation.percentage}% — ${currency.format(allocation.amount)}`, 10));
+  } else {
+    paragraph("Nenhuma simulação salva ainda. Visite a calculadora para criar seu cenário.", 10);
+  }
+  y += 6;
+
+  heading("Reserva de Emergência");
   if (calculator?.emergencyFund) {
     const goal = calculator.emergencyFund;
-    const deadline = goal.monthsToGoal === null ? "prazo não definido (informe um aporte mensal)" : goal.monthsToGoal === 0 ? "meta já alcançada" : `${goal.monthsToGoal} ${goal.monthsToGoal === 1 ? "mês" : "meses"}`;
-    paragraph(`Alvo de ${goal.months} ${goal.months === 1 ? "mês" : "meses"} de despesas essenciais: ${currency.format(goal.targetAmount)}.`, 10);
-    paragraph(`Reserva atual: ${currency.format(goal.currentReserve)} (${goal.progressPercentage}% concluída). Falta acumular ${currency.format(goal.remainingAmount)}.`, 10);
-    paragraph(`Aporte mensal planejado: ${currency.format(goal.monthlyContribution)}. Prazo estimado: ${deadline}.`, 10);
+    const deadline = goal.monthsToGoal === null ? "prazo não definido" : goal.monthsToGoal === 0 ? "meta alcançada" : `${goal.monthsToGoal} meses`;
+    paragraph(`Alvo de ${goal.months} meses de despesas essenciais: ${currency.format(goal.targetAmount)}`, 10);
+    paragraph(`Progresso atual: ${currency.format(goal.currentReserve)} (${goal.progressPercentage}% concluído). Falta ${currency.format(goal.remainingAmount)}.`, 10);
+    paragraph(`Aporte mensal: ${currency.format(goal.monthlyContribution)} | Prazo estimado: ${deadline}`, 10);
   } else {
-    paragraph("Nenhuma meta de reserva foi salva ainda. Visite a calculadora para definir despesas essenciais, meses de proteção e aporte mensal.", 10);
+    paragraph("Nenhuma meta de reserva salva ainda.", 10);
   }
-  y += 5;
+  y += 6;
 
-  heading("Metodologias favoritas");
+  heading("Metodologias Favoritas");
   if (favoriteEntries.length > 0) {
-    favoriteEntries.forEach(entry => paragraph(`${entry.name} — ${entry.kind}. ${entry.summary}`, 10));
+    favoriteEntries.forEach(entry => paragraph(`• ${entry.name} (${entry.kind}): ${entry.summary}`, 10));
   } else {
-    paragraph("Nenhuma metodologia foi salva como favorita ainda. Use o ícone de estrela nas fichas do acervo.", 10);
+    paragraph("Nenhuma metodologia marcada como favorita.", 10);
   }
-  y += 5;
+  y += 6;
 
-  heading("Progresso dos guias práticos");
-  practicalGuides.forEach(guide => {
-    const completed = guide.steps.filter((_, index) => checklist[`${guide.id}-${index}`]).length;
-    if (completed > 0) {
-      paragraph(`${guide.title}: ${completed} de ${guide.steps.length} passos concluídos.`, 10);
-    }
-  });
-  if (!Object.values(checklist).some(Boolean)) {
-    paragraph("Nenhum passo foi marcado ainda. Abra um guia prático e use o checklist para acompanhar a implementação.", 10);
-  }
+  heading("Progresso nos Guias Práticos");
+  const completedSteps = Object.values(checklist).filter(Boolean).length;
+  paragraph(`Passos concluídos e marcados nos guias: ${completedSteps}`, 10);
 
   ensureSpace(40);
   doc.setDrawColor(226, 221, 209);
   doc.line(54, y, pageWidth - 54, y);
-  y += 20;
-  paragraph("Este relatório é um registro pessoal de organização. Adapte os percentuais e passos à sua realidade e confirme informações diretamente nas fontes oficiais.", 9, [120, 132, 123]);
-  doc.save("meu-plano-financeiro.pdf");
+  y += 18;
+  paragraph("Este plano é um guia pessoal de clareza e alinhamento. Ajuste os números no seu ritmo e sem julgamento.", 9, [120, 132, 123]);
+
+  doc.save("paz-em-financas-meu-plano.pdf");
 };
