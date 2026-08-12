@@ -43,3 +43,9 @@
 - [x] Criar e validar a habilidade reutilizável do processo com skill-creator.
 - [x] Validar testes, build e responsividade dos novos recursos.
 - [x] Salvar o checkpoint publicado da atualização.
+
+
+- [x] Adicionar gráfico interativo à calculadora de orçamento.
+- [x] Implementar exportação em PDF de checklists, favoritos e resultados da calculadora.
+- [x] Validar PDF, gráfico e responsividade em desktop e móvel.
+- [x] Salvar o checkpoint publicado da atualização.
